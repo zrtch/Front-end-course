@@ -139,3 +139,13 @@ p:first-child {
  ![ CSS 的加载过程](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZAH46iapaY0pcYUYGjyOsyIU7P04TklibtPibcctE063dkX59I9wzvHiccg3oN72Voq9Enzb4KRicqSuw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
  从图中可以明确，p:first-child 选择的是孩子节点中第一个元素是 p 的元素。所以被选中的元素为下图中「突出」显示的元素。
   ![ CSS 的加载过程](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZAH46iapaY0pcYUYGjyOsyI506hTcQjcRply8rISmrKxtjyvSpLicfiaOLNYP1SjibEamvRe9iaib6EKTw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+### boder能干啥
+它的意思是「边框」。在超越技术官网上有这么一种设计，自我介绍、联系方式和公众号下面有一条横线，它会根据字数的不同，长度在变化。这里恰好用到了 border 这个属性。
+* border 是一个简写属性，它由一个或多个属性组成：border-width, border-style, border-color。往往会使用简写的方式，比如：
+```css
+/* 选择「所有」「孩子节点」是「p」的元素 */
+. title {
+   border: 1px solid red;
+}
+```
