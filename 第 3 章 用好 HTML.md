@@ -145,7 +145,7 @@ p:first-child {
 * border 是一个简写属性，它由一个或多个属性组成：border-width, border-style, border-color。往往会使用简写的方式，比如：
 ```css
 /* 选择「所有」「孩子节点」是「p」的元素 */
-. title {
+.title {
    border: 1px solid red;
 }
 ```
@@ -154,9 +154,77 @@ p:first-child {
 * border-color：表示边框的颜色，可以分别设置上下左右边框为不同的颜色。
 ```css
 /* 选择「所有」「孩子节点」是「p」的元素 注:transparent用来指定全透明色彩 */
-. border-triangle {
+.border-triangle {
   width:0;
   border:20px,solid;
   border-color:#f00 transparent transparent transparent;
 }
 ```
+### CSS布局的半壁江山---盒子模型
+* **一.块级盒子(block)**:
+1. 尽可能扩大可利用的空间，比如 p 标签默认是一个块级标签，它的宽度会填满父元素；
+   ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfjLdwR5l0jOnjIvfg45p2DxiaZW4LM2nLicFyqTguB6eTwyZ846sU5yOA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+2. 独占一行，也就说一个块级元素占一行；
+
+   ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfTum2OSW75w6h3elmRGjw4SoXkWibf30XFDthYGCiawWbIWReXDVwoXVQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+3. 可以使用 width 和 height 属性，比如设置 width 来改变宽度；
+    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFf04bp29j5DlX2Mp29HMsvpOdtoZUpyDReRy227ZcWce87HwwlCiaZloQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+4. 使用 padding、margin 和 border 会影响其它元素的位置，这句话比较抽象，比如当改变元素自己的 padding 的时候，其它元素的位置也会发生变化。
+     ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFflFZkhFZbE3I9ibP8t8YW84Vc4ZyQicia0hczZsSgDmLDm83IBehjbHqpA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+* **二.行内盒子(inline box)**:
+1. 不会单行显示，除非一行没有足够多的空间，它会一个接一个地排列；
+      ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfrv7WLPc8gEssFhLOWx9p4H8LhAibm18uOsY2Iq8urwiaP7J0vf50gsyg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+2. width 和 height 属性不起作用，**如果给 span 标签设置 width 或 height 时，发现无效**；
+3. padding、margin 和 border 会起作用，但不会影响其它元素。
+   
+标签都会有自己默认的显示方式，可以通过 <u>display</u> 来修改其显示方式，比如把块级元素变成行内元素，比如 p 标签默认的是块级元素，通过 display 来修改为 inline。
+```css
+.title {
+    display:inline;
+}
+```
+比如 span 元素默认的是行内元素，通过 display 来修改为块级元素。
+```css
+.title {
+    display: block;
+}
+```
+**盒模型**:块级元素使用了盒子模型的所有特性，而行内元素只使用了部分特性。
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfdHaARiadAUGHH0pfXf0WYzK3avOmMLQBglrvFWl3XMRnfseibF0gHnjQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+1. margin（外边距）：它表示盒子之间的距离，可以通过 margin-top、margin-bottom、
+2. margin-left、margin-right 来控制各个方向的边距，**它们可以为负值**；
+3. border（边框）：表示盒子的边框；
+4. padding（内边距）：表示与内容之间的距离；
+5. content（内容）：表示内容的大小；
+   
+
+**1.标准的盒子模型** : 对于这种盒子模式，给它设置的 width 和 height 是 content 的宽高，当给盒子添加 padding 和 border 的时候，会增加盒子的整体大小。*「外边距不会计入盒子的大小，它只是表示外部的边距」*。下面的代码盒子最终的宽 = 100+20+20+10+10 = 160px；
+```css
+.std-box {
+    width: 100px;
+    height: 120px;
+    padding: 20px;
+    border: 10px solid red;
+    margin: 30px;
+    background-color: antiquewhite;
+}
+```
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfPichmG5XHWE6pLnvM5TMEEqDDAdjJSticTwy8sNnCTdpyG6O0fmCnExA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+**1.诡异盒子模型** : 对于这种盒子模式，给它设置的 width 和 height 是盒子的宽高，也就是说内容 content 的宽需要减去 border 和 padding 的宽。谷歌浏览器默认的是标准的盒模型，可以通过：
+```css
+box-sizing:border-box
+```
+来修改盒模型为诡异盒模型，把上面的 CSS 修改成诡异盒模型。
+```css
+.std-box {
+    width: 100px;
+    height: 120px;
+    padding: 20px;
+    border: 10px solid red;
+    margin: 30px;
+    background-color: antiquewhite;
+    box-sizing: borde-box;
+}
+```
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfIlMyZibOEqWLMwibhr7G4UH291cvg5AgRI2TuUg0dsVqLI4bMoLm2iasA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
