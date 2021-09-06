@@ -144,7 +144,6 @@ p:first-child {
 它的意思是「边框」。在超越技术官网上有这么一种设计，自我介绍、联系方式和公众号下面有一条横线，它会根据字数的不同，长度在变化。这里恰好用到了 border 这个属性。
 * border 是一个简写属性，它由一个或多个属性组成：border-width, border-style, border-color。往往会使用简写的方式，比如：
 ```css
-/* 选择「所有」「孩子节点」是「p」的元素 */
 .title {
    border: 1px solid red;
 }
@@ -153,7 +152,7 @@ p:first-child {
 * border-style: 表示边框的样式，可以分别设置上下左右边框为不同的样式，比如 border-bottom-style，可以取下面几种值：node、hidden、dotted、dashed、solid 等；
 * border-color：表示边框的颜色，可以分别设置上下左右边框为不同的颜色。
 ```css
-/* 选择「所有」「孩子节点」是「p」的元素 注:transparent用来指定全透明色彩 */
+/* 注:transparent用来指定全透明色彩 */
 .border-triangle {
   width:0;
   border:20px,solid;
