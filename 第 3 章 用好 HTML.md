@@ -149,3 +149,14 @@ p:first-child {
    border: 1px solid red;
 }
 ```
+* border-width：表示边框的宽度，可以分别设置上下左右边框为不同的宽度，比如 border-bottom-width；
+* border-style: 表示边框的样式，可以分别设置上下左右边框为不同的样式，比如 border-bottom-style，可以取下面几种值：node、hidden、dotted、dashed、solid 等；
+* border-color：表示边框的颜色，可以分别设置上下左右边框为不同的颜色。
+```css
+/* 选择「所有」「孩子节点」是「p」的元素 注:transparent用来指定全透明色彩 */
+. border-triangle {
+  width:0;
+  border:20px,solid;
+  border-color:#f00 transparent transparent transparent;
+}
+```

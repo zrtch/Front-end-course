@@ -56,6 +56,21 @@
     [lefe] {
         color: red;
     }
+
+    /* transparent用来指定全透明色彩 */
+    .triangle {
+        width: 0;
+        border: 20px solid;
+        border-color: #f30 transparent transparent transparent;
+    }
+
+    /* 扩大点击区域 */
+    .icon {
+        background: antiquewhite;
+        width: 15px;
+        height: 15px;
+        border: 11px solid transparent;
+    }
 </style>
 
 <body>
@@ -76,6 +91,10 @@
         </div>
 
         <div lefe>Tomatoes</div>
+
+        <!-- boder - 倒三角形图标 -->
+        <div class="triangle"></div>
+        <div class="icon"></div>
     </div>
 
     <script>
