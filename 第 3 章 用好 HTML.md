@@ -162,16 +162,20 @@ p:first-child {
 ### CSS布局的半壁江山---盒子模型
 * **一.块级盒子(block)**:
 1. 尽可能扩大可利用的空间，比如 p 标签默认是一个块级标签，它的宽度会填满父元素；
+
    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfjLdwR5l0jOnjIvfg45p2DxiaZW4LM2nLicFyqTguB6eTwyZ846sU5yOA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 2. 独占一行，也就说一个块级元素占一行；
 
    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfTum2OSW75w6h3elmRGjw4SoXkWibf30XFDthYGCiawWbIWReXDVwoXVQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 3. 可以使用 width 和 height 属性，比如设置 width 来改变宽度；
+   
     ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFf04bp29j5DlX2Mp29HMsvpOdtoZUpyDReRy227ZcWce87HwwlCiaZloQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
-4. 使用 padding、margin 和 border 会影响其它元素的位置，这句话比较抽象，比如当改变元素自己的 padding 的时候，其它元素的位置也会发生变化。
+5. 使用 padding、margin 和 border 会影响其它元素的位置，这句话比较抽象，比如当改变元素自己的 padding 的时候，其它元素的位置也会发生变化。
+   
      ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFflFZkhFZbE3I9ibP8t8YW84Vc4ZyQicia0hczZsSgDmLDm83IBehjbHqpA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 * **二.行内盒子(inline box)**:
 1. 不会单行显示，除非一行没有足够多的空间，它会一个接一个地排列；
+   
       ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfrv7WLPc8gEssFhLOWx9p4H8LhAibm18uOsY2Iq8urwiaP7J0vf50gsyg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 2. width 和 height 属性不起作用，**如果给 span 标签设置 width 或 height 时，发现无效**；
 3. padding、margin 和 border 会起作用，但不会影响其它元素。
