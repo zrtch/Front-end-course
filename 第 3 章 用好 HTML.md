@@ -194,11 +194,10 @@ p:first-child {
 ```
 **盒模型**:块级元素使用了盒子模型的所有特性，而行内元素只使用了部分特性。
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfdHaARiadAUGHH0pfXf0WYzK3avOmMLQBglrvFWl3XMRnfseibF0gHnjQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
-1. margin（外边距）：它表示盒子之间的距离，可以通过 margin-top、margin-bottom、
-2. margin-left、margin-right 来控制各个方向的边距，**它们可以为负值**；
-3. border（边框）：表示盒子的边框；
-4. padding（内边距）：表示与内容之间的距离；
-5. content（内容）：表示内容的大小；
+1. margin（外边距）：它表示盒子之间的距离，可以通过 margin-top、margin-bottom、 margin-left、margin-right 来控制各个方向的边距，**它们可以为负值**；
+2. border（边框）：表示盒子的边框；
+3. padding（内边距）：表示与内容之间的距离；
+4. content（内容）：表示内容的大小；
    
 
 **1.标准的盒子模型** : 对于这种盒子模式，给它设置的 width 和 height 是 content 的宽高，当给盒子添加 padding 和 border 的时候，会增加盒子的整体大小。*「外边距不会计入盒子的大小，它只是表示外部的边距」*。下面的代码盒子最终的宽 = 100+20+20+10+10 = 160px；
@@ -231,3 +230,24 @@ box-sizing:border-box
 }
 ```
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfIlMyZibOEqWLMwibhr7G4UH291cvg5AgRI2TuUg0dsVqLI4bMoLm2iasA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+### @规则之@media
+@media 通俗地讲就是为了**匹配不同的媒体**，根据条件的不同**使用不同的 CSS 样式**。下面代码中的 **screen 是媒体类型**，在此表示带有屏幕的设备，比如电脑、手机，还有其它的媒体类型，比如 tv；and 用来组合多个条件，这里表示且，还有 not 和 only；**min-width 是媒体功能**
+```css
+@media screen and (min-width:700){
+    //指的是匹配带有屏幕的设备，且最小尺寸是700像素
+}
+```
+### 打破常规之display
+* **display:inline** : 使用 inline 告诉浏览器这是一个**行内元素**，布局的时候要按照行内元素的方式布局，比如 span 标签默认的就是这种布局方式。在有足够空间的时候，**它不会换行**。不能使用 width 和 height 属性，margin 只会在水平方向起作用。
+* **display:block** : 使用 block 告诉浏览器这是一个**块级元素**，布局的时候要按照块级元素的方式布局，比如 p 、div 标签默认就是这种布局方式。使 span 标签变为块级标签，效果如下：
+```css
+span{
+    display:block
+}
+```
+* **display:inline-block** : 这种布局方式结合了 inline 和 block 这两种元素的特性，它与块级元素不同的是：元素不会单独占用一行；相同的是：可以使用 width 和 height，可以通过 padding、margin 和 border 来控制元素的显示位置。说白了就是**除了不会单独占一行，其余的与块级元素一致。**
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGanPOYkyatiar8tkQxdTYeFfByHgDTCVDzn0dgre9DIpQLLzoBcPE393MF7p4iakqhBibPuM98RK6CEQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+* **display:none** : 这种布局方式会**隐藏元素**。
+* **display:flex** : 这是一种 flexbox 布局，它是一维的。
+* **display:grid** : 这是一种网格布局，它是二维的。
