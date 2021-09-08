@@ -251,3 +251,50 @@ span{
 * **display:none** : 这种布局方式会**隐藏元素**。
 * **display:flex** : 这是一种 flexbox 布局，它是一维的。
 * **display:grid** : 这是一种网格布局，它是二维的。
+### CSS中使用图
+* **img标签** : img标签比较特殊，它默认属于行内（inline）元素。
+  
+  ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGbyH7gh9dLjHMy2AFmKbWoYxibMeaGmquIeJJ597Td3ZhSN0HAYVSgSVnPOicSicL8EtngBWDB4GlUOA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+```css
+.mini-logo {
+    width: 30px;
+    /* 指定行内元素的垂直对齐方式 */
+    vertical-align: middle;
+}
+```
+```html
+<p>我这里有个min版的二维码，扫一扫
+    <img class="mini-logo" src="./images/qrcode.jpg">
+</p>
+```
+1. width: **表示设置图片的宽度**，如果只设置宽度，那么 img 标签的高度会根据图片的大小进行等比缩放。只设置高度也是同样的道理。如果即设置了高度又设置了宽度，那么图片的高度和宽度即为设置的宽高。
+2. vertical-align: 表示在竖直方向上的对齐方式，它有 top、middle、bottom、baseline、sub 和 text-top 这几个值。
+3. src：**表示图片的来源**，可以是「本地」的图片，也可以是「网络」中的图片。
+4. alt：**对图片的描述**，供屏幕阅读器或者图片未加载出来时显示。
+* **背景图** ： 背景图的**作用是给某个元素添加背景**，不会添加额外的元素。可以设置背景颜色或者背景图
+```css
+.box {
+        width: 200px;
+        height: 200px;
+        background-color: antiquewhite;
+        background-image: url('./logo_suyan.png');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+}
+```
+1. **background-postion**: <u>表示背景图的起始位置</u>；
+background-postion：top | left | bottom | right，在某个边缘的位置，另一个维度为 50%。比如 top，背景图的起始位置为顶部，在X轴方向为 50%，居中显示；
+background-postion：center，居中背景图；
+background-postion：25% 75%，设置基于背景区域的开始位置，可以为负值；
+2. **background-postion-x**：<u>背景在 x 轴上的位置</u>；
+3. **background-postion-y**：<u>背景在 y 轴上的位置</u>；
+4. **background-repeat**: <u>背景的重复方式</u>， no-repat 不重复，repeat 重复，repat-x X轴上重复，还有其它关键字，读者可以自行查看
+https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-repeat。
+5. **background-size**: <u>背景图的大小</u>；</br>
+**background-size: cover**，缩放背景图以完全覆盖背景区，保持原图的宽高比，可能背景图部分会看不到，填满背景图；</br>
+**background-size: contain**，缩放背景图以完全显示背景图，保持原图的宽高比，可能背景部分区域空白，尽可能把图显示完整；</br>
+background-size: 50%，背景图的大小为背景区的百分比；</br>
+background-size: 12px，背景图的宽度为 12px，高度按照比例自动缩放；</br>
+background-size: 12px 14px，背景图的宽度为 12px，高度14px；
+
