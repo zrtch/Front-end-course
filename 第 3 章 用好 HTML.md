@@ -298,3 +298,54 @@ background-size: 50%，背景图的大小为背景区的百分比；</br>
 background-size: 12px，背景图的宽度为 12px，高度按照比例自动缩放；</br>
 background-size: 12px 14px，背景图的宽度为 12px，高度14px；
 ### 在文字前、后插入一个图标之伪类选择器
+伪选择分为**伪类选择器**和**伪元素选择器**；伪选择在于「伪」这个字，他很能「伪装」，比如它偶尔伪装成一个DOM中不存在的元素。
+1. 伪类选择器（Pseudo-classes）它的作用是**选中某个元素中符合某些条件的元素**。比如鼠标悬停到某个元素后的状态，某个元素的第一个孩子，**使用1个冒号 :** 。它的效果好像*是为元素添加了一个新的选择器*`。**「作用于现有元素，相当于给现有元素添加某些属性」**。对于这类选择器在前面的课程中我们有提到过 群里讨论的一个选择器问题（一定要看），它主要涉及到选择某些孩子节点。常用的伪类选择器有：
+```css
+:first-child    选择器匹配其父元素中的第一个子元素。
+:not   选择器匹配每个元素是不是指定的元素/选择器。 :not(p) 选择所有p以外的元素
+:nth-child()    选择器匹配父元素中的第 n 个子元素，元素类型没有限制。
+:only-child()   p:only-child：选择所有仅有一个子元素的p元素
+:root()  选择文档的根元素
+:disabled  选择所有禁用的表单元素
+/* 比较常见的 a 标签在不同状态下的展示效果 */
+a{
+    color: black;
+}
+a:hover{
+    color: blue;
+}
+a:visited{
+    color: gray;
+}
+```
+2. 伪元素选择器（Pseudo-elements）它的作用就是**给现有元素添加某些新的内容，就好比给某个元素添加了一个新的标签**，使用2个冒号 :: ，有些也可以使用1个:，但建议**统一使用2个冒号 : :** 。
+   
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYiaXjlAPZ75giaxSwJEa0C8VowTC5f0ia0emeorricEQmTz9ic0oVrYAur0AvYAecz2UaibIcgfMniaTV4g/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYiaXjlAPZ75giaxSwJEa0C8VQOroh85ykzJjFKSgzOqPytLrCd4bgt7GNlWBdz4LdicoKWE8bdan6Vw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+```html
+<p class="left">前端小课</p>
+```
+```css
+.left{
+    color: black;
+    font-size: 15px;
+}
+.left::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    background-image: url('./images/hert.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    margin-right: 4px;
+    width: 30px;
+    height: 30px;
+}
+```
+通过 **::before 和 ::after 可以给已知元素的前面或者后面拼接新的内容**，好像添加了新的元素，我觉得这应该就是伪元素中“伪”的真正含义吧，它并不是一个真正的元素，但**可以充当元素的角色**。除了这两个伪元素外，还有其它的伪元素，比如：
+```css
+::first-letter  表示对首字母进行操作	p:first-letter  选择每个<p> 元素的第一个字母
+::first-line  对首行内容进行操作	p:first-line    选择每个<p> 元素的第一行
+```
+   
