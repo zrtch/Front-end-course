@@ -93,6 +93,14 @@
         /* 设置border-box修改盒模型为诡异盒模型 */
         box-sizing: border-box;
     }
+
+    .singal-line {
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+    }
 </style>
 
 <body>
@@ -123,6 +131,10 @@
 
         <!-- 怪异盒模型 -->
         <div class="guaiyi-box"></div>
+
+        <!-- 单行显示 -->
+        <div class="singal-line">通过 ::before 和 ::after
+            可以给已知元素的前面或者后面拼接新的内容，好像添加了新的元素，我觉得这应该就是伪元素中“伪”的真正含义吧，它并不是一个真正的元素，但可以充当元素的角色。除了这两个伪元素外，还有其它的伪元素</div>
     </div>
 
     <script>

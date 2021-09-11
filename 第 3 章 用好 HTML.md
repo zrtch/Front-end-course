@@ -348,4 +348,28 @@ a:visited{
 ::first-letter  表示对首字母进行操作	p:first-letter  选择每个<p> 元素的第一个字母
 ::first-line  对首行内容进行操作	p:first-line    选择每个<p> 元素的第一行
 ```
+### 设计师的要求
+* 显示一行内容:无非就是要让显示的内容不这行显示,对超过的可是区域的内容进行隐藏即可.
+```css
+.singal-line {
+    overflow: hidden; 
+    white-space: nowrap;   不换行显示
+    text-overflow: ellipsis;  
+}
+```
+ text-overflow这个属性只对块级元素起作用,表示对超出指定区域的内容如何显示.
+ 1.  ellipsis（省略号）: 以 ... 省略号显示
+ 2.  clip : 截断显示；
+* 显示两行且超出部分以省略号显示，这个需要使用 webkit 的 CSS 扩展属性 -webkit-line-clamp ，它用来控制内容的行数，如果想让这个属性起作用，需要满足:
+```css
+.two-line{
+    display: -webket-box;   必须满足display 为 -webkit-box 或者 -webkit-inline-box
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;   表示显示几行内容
+    -webkit-box-orient: vertical;    指定一个box子元素是否应按水平或垂直排列。
+}
+```
+
+
    
