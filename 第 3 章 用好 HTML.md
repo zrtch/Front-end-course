@@ -370,6 +370,112 @@ a:visited{
     -webkit-box-orient: vertical;    指定一个box子元素是否应按水平或垂直排列。
 }
 ```
+### css动画
+* **animation：CSS动画，可设置不同帧的动效；** animation 是通过 CSS 给某个 HTML元素设置一个动画，可以通过下面这些属性来控制动画。
+1. <u>**animation-name: 动画的名字**</u>，这个是**通过 @keyframes 定义的名字**，比如 @keyframes 定义如下，那么 ***animation-name 就为 move***。@keyframes 指定某一帧的动画如何变化，可通过 % 来控制各个阶段的属性值，比如 0% 的时候，元素的 left 和 top 都为 0。
+```css
+@keyframes move{
+    0% {
+        left: 0;
+        top: 0;
+    }
+    100% {
+        left: 0;
+        top: 0;
+    }
+}
+```
+2. **animation-duration：动画的持续时间；**
+3. **animation-delay：动画开始时的延迟时间；**
+4. **animation-iteration-count：动画循环次数；**
+5. **animation-direction：动画的方向**，比如 alternate 表示先正向后逆序，nomal 正向，reverse 逆序；
+6. **animation-timing-function：动画的时间曲线**，它的值有 ease、ease-in、ease-out、ease-in-out、linear；
+7. **animation-fill-mode：动画执行后的填充模式**，**它的值有 forwards、backwards、none、both；
+```html
+ <div class="move-box move-box-animation"></div>
+```
+```css
+    .move-box {
+        background-color: red;
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+    }
+    .move-box-animation {
+        /* animation: name duration timing-function delay iteration-count direction fill-mode; */
+        /* 名字，为 @keyframes 的名字 */
+        animation-name: move;
+        /*  动画的时间 */
+        animation-duration: 5s;
+        /* 动画执行函数 */
+        animation-timing-function: ease-in-out;
+        /* 动画延迟时间 */
+        animation-delay: 1s;
+        /* 动画重复次数 */
+        animation-iteration-count: 10;
+        /* 动画的方向，先正向后逆向 */
+        animation-direction: alternate;
+        /* 动画执行后的填充模式 */
+        animation-fill-mode: backwards;
+        /* 动画的运行状态 */
+        animation-play-state: running;
+    }
 
+    @keyframes move {
+        0% {
+            left: 0;
+            top: 0;
+        }
+        25% {
+            left: 100px;
+            top: 0;
+        }
+        50% {
+            left: 100px;
+            top: 100px;
+        }
+        75% {
+            left: 0;
+            top: 100px;
+        }
+        100% {
+            left: 0;
+            top: 0;
+        }
+    }
+```
+* <u>**transition是过渡动画**</u>，修改某些属性的时候不会立刻生效，**它会以动画的形式逐渐过度到要设置的值**。比如设置某个HTML元素的背景颜色，修改宽度和高度。
+1. **transition-property: 指需要使用过渡动画的属性，这里设置了背景色，高度和宽度**。也可以通过关键字 all 设置所有的属性；
+2. **transition-duration: 动画持续的时间**，可以单独控制某个属性的时间
+transition-duration：1.8s, 1.0s, 1.0s 表示修改 background-color 需要 1.8s, 修改 height 需要 1.0s,  修改 width 需要 1.0s;
+3. **transition-delay：动画开始时需要延迟多长时间才开始执行**；
+4. **transition-timing-function：表示动画执行时的时间函数，不同函数走过的曲线不一样；**
+```html
+    <div id="move-transition-box" class="move-transition" onclick="scale()"></div>
+```
+```css
+    #move-transition-box {
+        background-color: cornflowerblue;
+        width: 120px;
+        height: 120px;
+    }
+
+    .move-transition {
+        transition-property: background-color, height, width;
+        transition-duration: 1.8s, 1.0s, 1.0s;
+        transition-delay: 0.1s;
+        transition-timing-function: linear;
+    }
+```
+```javascript
+//transition过渡动画
+    function scale() { //当点击方块的时候，方块会变大，颜色逐渐变成红色。
+        let tbox = document.getElementById('move-transition-box');
+        tbox.style.height = 240 + 'px';
+        tbox.style.width = 240 + 'px';
+        tbox.style.backgroundColor = 'orange';
+    }
+```
 
    

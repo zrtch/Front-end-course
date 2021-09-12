@@ -101,6 +101,91 @@
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
     }
+
+    /* css动画 */
+    .bg-box {
+        background-color: gray;
+        width: 100px;
+        height: 100px;
+    }
+
+    .bg-box-animation {
+        /* 动画的名字和动画执行的时间，需要把动画绑定到某个选择器上才会执行*/
+        animation: background-change 2s;
+    }
+
+    @keyframes background-change {
+        0% {
+            background-color: antiquewhite;
+        }
+
+        50% {
+            background-color: brown;
+        }
+
+        100% {
+            background-color: blue;
+        }
+    }
+
+    .move-box {
+        background-color: red;
+        position: relative;
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+    }
+
+    .move-box-animation {
+        animation-name: move;
+        animation-duration: 5s;
+        animation-timing-function: ease-in-out;
+        animation-delay: 1s;
+        animation-iteration-count: 10;
+        animation-direction: alternate;
+        animation-fill-mode: backwards;
+        animation-play-state: running;
+    }
+
+    @keyframes move {
+        0% {
+            left: 0;
+            top: 0;
+        }
+
+        25% {
+            left: 300px;
+            top: 0;
+        }
+
+        50% {
+            left: 300px;
+            top: 100px;
+        }
+
+        75% {
+            left: 0;
+            top: 100px;
+        }
+
+        100% {
+            left: 0;
+            top: 0;
+        }
+    }
+
+    #move-transition-box {
+        background-color: cornflowerblue;
+        width: 120px;
+        height: 120px;
+    }
+
+    .move-transition {
+        transition-property: background-color, height, width;
+        transition-duration: 1.8s, 1.0s, 1.0s;
+        transition-delay: 0.1s;
+        transition-timing-function: linear;
+    }
 </style>
 
 <body>
@@ -134,7 +219,16 @@
 
         <!-- 单行显示 -->
         <div class="singal-line">通过 ::before 和 ::after
-            可以给已知元素的前面或者后面拼接新的内容，好像添加了新的元素，我觉得这应该就是伪元素中“伪”的真正含义吧，它并不是一个真正的元素，但可以充当元素的角色。除了这两个伪元素外，还有其它的伪元素</div>
+            可以给已知元素的前面或者后面拼接新的内容，好像添加了新的元素，我觉得这应该就是伪元素中“伪”的真正含义吧，它并不是一个真正的元素，但可以充当元素的角色。除了这两个伪元素外，还有其它的伪元素
+        </div>
+
+        <!-- css动画之animation -->
+        <div class="bg-box bg-box-animation"></div>
+        <div class="move-box move-box-animation"></div>
+
+        <!-- div动画之transition -->
+        <div id="move-transition-box" class="move-transition" onclick="scale()"></div>
+
     </div>
 
     <script>
@@ -148,6 +242,14 @@
                     navBox.scrollTo(navBox.clientWidth / 2 - dBox.clientWidth / 2 - 15, 0)
                 }
             }
+        }
+
+        //transition过渡动画
+        function scale() { //当点击方块的时候，方块会变大，颜色逐渐变成红色。
+            let tbox = document.getElementById('move-transition-box');
+            tbox.style.height = 240 + 'px';
+            tbox.style.width = 240 + 'px';
+            tbox.style.backgroundColor = 'orange';
         }
     </script>
 
