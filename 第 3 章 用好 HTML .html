@@ -186,6 +186,54 @@
         transition-delay: 0.1s;
         transition-timing-function: linear;
     }
+
+    .content {
+        width: 200px;
+        height: 300px;
+        font-size: 20px;
+        background-color: #258BD6;
+    }
+
+    .title {
+        width: 9em;
+        height: 4em;
+        background-color: #FE7235;
+    }
+
+    html {
+        font-size: 10px;
+    }
+
+    .rem-content {
+        width: 200px;
+        height: 300px;
+        font-size: 20px;
+        margin-top: 10px;
+        background-color: #258BD6;
+        margin-bottom: 20px;
+    }
+
+    .rem {
+        font-size: 10px;
+        width: 9rem;
+        height: 4rem;
+        background-color: #FE7235;
+
+    }
+
+    .vw-content {
+        width: 50vw;
+        height: 50vh;
+        font-size: 20px;
+        background-color: rebeccapurple;
+    }
+
+    .vmax-content {
+        width: 10vmax;
+        height: 10vh;
+        font-size: 20px;
+        background-color: red;
+    }
 </style>
 
 <body>
@@ -229,6 +277,18 @@
         <!-- div动画之transition -->
         <div id="move-transition-box" class="move-transition" onclick="scale()"></div>
 
+        <!-- 相对单位之em -->
+        <div class="content">
+            <div class="title"></div>
+        </div>
+
+        <div class="rem-content">
+            <div class="rem"></div>
+        </div>
+
+        <div class="vw-content"></div>
+
+        <div class="vmax-content"></div>
     </div>
 
     <script>

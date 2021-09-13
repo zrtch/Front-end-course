@@ -477,5 +477,79 @@ transition-duration：1.8s, 1.0s, 1.0s 表示修改 background-color 需要 1.8s
         tbox.style.backgroundColor = 'orange';
     }
 ```
-
-   
+### 屏幕尺寸之相对单位
+相对单位指它的尺寸是**相对于另外一个元素的尺寸**。常用的是 em、rem、vh、vw、vmin、vmax。理解相对单位的时候需要掌握 font-size 这个 CSS 属性，它表示字体的大小，**同时也可以用来计算相对单位的长度**。「避免认为 font-size 就是表示字体大小的思维定势」。
+* <u>**em**</u>: 它是相对于「自身或父元素」的 font-size 来计算自身的尺寸：
+```html
+    <div class="content">
+        <div class="title"></div>
+    </div>
+```
+```css
+    .content {
+        width: 200px;
+        height: 300px;
+        font-size: 20px;
+        background-color: #258BD6;
+    }
+    .title {
+        width: 9em;
+        height: 4em;
+        background-color: #FE7235;
+    }
+```
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZVK1Yzmh2rg4gbNX6FbsrelNY1l7lWQp6G0jvGaGGG3oVGnV23JHphl7EzBibg8HaaiatYjQxT7DHg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+选择器 content 的 font-size 是 20px，在选择器 title 的 width 属性的值为 9em，由于 title 所在的 div 标签父元素是 content 所在的标签，所以 width = 9*font-size=9*20=180px；同理 height = 4*20=80px；如果 title 所在的 div 标签 设置了 font-size，那么**em 计算的值将会依据自身的 font-size 计算。**
+* <u>**rem**</u>:**这个单位是依据「根元素 html 标签」的 font-size 来计算最终的值**，这个单位***对移动端***web开发十分实用，通过**设置 html 的 font-size 来等比缩放元素的大小。**比如下面的代码，title 所在的 div 标签 width=15*9=135px，height=15*4=60px；
+```html
+<body>
+    <div class="content">
+        <div class="title"></div>
+    </div>
+</body>
+```
+```css
+html {
+    font-size: 15px;
+}
+body {
+    background-color: #eeeeee;
+    font-size: 10px;
+}
+.content {
+    width: 200px;
+    height: 300px;
+    font-size: 20px;
+    background-color: #258BD6;
+}
+.title {
+    font-size: 10px;
+    width: 9rem;
+    height: 4rem;
+    background-color: #FE7235;
+}
+```
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZVK1Yzmh2rg4gbNX6FbsreonBQjaQI1C5BrQvbibkX6iaQ18tRja2fibELaL8VSia0SDXoT7zK0rf5ug/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+* <u>**vw（viewport width）**</u>，可视区域宽度，**比如设置 50vw，相当于可视区域宽度的一半；**
+* <u>**vh（viewport height）**</u>，可视区域高度，**比如设置 50vh，相当于可视区域高度的一半；**
+```html
+ <div class="content"></div>
+```
+```css
+.content {
+    width: 50vw;
+    height: 50vh;
+    font-size: 20px;
+    background-color: #258BD6;
+}
+```
+* vmax: vw 和 vh 中最大的；
+* vmin: vw 和 vh 中最小的；
+```css
+.content{
+    width: 10vmax;
+    height: 10vh;
+    font-size: 20px;
+    background: red;
+}
+```
