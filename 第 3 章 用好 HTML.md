@@ -606,3 +606,89 @@ div p {
     color: peru;
 }
 ```
+### 写出易复用、易维护、结构清晰的 CSS
+> Less 是一门 CSS 预处理语言，它扩展了 CSS 语言，增加了变量、Mixin、函数等特性，使 CSS 更易维护和扩展。
+```less
+// 用来定义一些变量，比如字体颜色，背景颜色
+@main-color: #1565C0;
+@text-color: #222222;
+@des-color: #999999;
+@backgroud-color: #eeeeee;
+@edge-width: 16px;
+@small-edge-width: 8px;
+@strong-color: red;
+@nomal-font-size: 18px;
+.wx-border {
+    border: solid 1px @main-color;
+}
+```
+```less
+// 通过 @import 来导入在 base.less 中定义的变量及选择器：
+@import "./base.less";
+.header {
+    padding: 0 @edge-width;
+    background-color: @backgroud-color;
+    .title {
+       // @text-color 在 base.less 定义好的变量
+        color: @text-color;
+        font-size: @nomal-font-size;
+        &::first-letter {
+            font-size: 24px;
+            color: @strong-color;
+        }
+    }
+    p a {
+        color: @main-color;
+        font-size: @nomal-font-size;
+        /**&:hover 相当于 a:hover**/
+        &:hover {
+            color: @strong-color;
+        }
+    }
+    p:nth-child(3) {
+        width: 100px;
+        text-align: center;
+        padding: @small-edge-width;
+        /**引用在 base.less 定义好的选择器 **/
+        .wx-border();
+    }
+}
+```
+```css
+/* 很有规律的css代码 */
+.dsa-box div:nth-child(1) {
+    background-image: url('./images/1.png');
+}
+.dsa-box div:nth-child(2) {
+    background-image: url('./images/2.png');
+}
+.dsa-box div:nth-child(3) {
+    background-image: url('./images/3.png');
+}
+.dsa-box div:nth-child(4) {
+    background-image: url('./images/4.png');
+}
+.dsa-box div:nth-child(5) {
+    background-image: url('./images/5.png');
+}
+.dsa-box div:nth-child(6) {
+    background-image: url('./images/6.png');
+}
+.dsa-box div:nth-child(7) {
+    background-image: url('./images/7.png');
+}
+.dsa-box div:nth-child(8) {
+    background-image: url('./images/8.png');
+}
+.dsa-box div:nth-child(9) {
+    background-image: url('./images/9.png');
+}
+```
+```less
+// 代码原理就是使用 rang 生成 1 到 9 这几个数字，通过 each 来遍历，然后生成对应的选择器。
+each(range(9),{
+    .dsa-box div:nth-child(@{value}){
+        background-image: url("./images/@{value}.png")
+    }
+})
+```
