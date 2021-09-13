@@ -500,7 +500,7 @@ transition-duration：1.8s, 1.0s, 1.0s 表示修改 background-color 需要 1.8s
 ```
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZVK1Yzmh2rg4gbNX6FbsrelNY1l7lWQp6G0jvGaGGG3oVGnV23JHphl7EzBibg8HaaiatYjQxT7DHg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 选择器 content 的 font-size 是 20px，在选择器 title 的 width 属性的值为 9em，由于 title 所在的 div 标签父元素是 content 所在的标签，所以 width = 9*font-size=9*20=180px；同理 height = 4*20=80px；如果 title 所在的 div 标签 设置了 font-size，那么**em 计算的值将会依据自身的 font-size 计算。**
-* <u>**rem**</u>:**这个单位是依据「根元素 html 标签」的 font-size 来计算最终的值**，这个单位***对移动端***web开发十分实用，通过**设置 html 的 font-size 来等比缩放元素的大小。**比如下面的代码，title 所在的 div 标签 width=15*9=135px，height=15*4=60px；
+* <u>**rem**</u>:**这个单位是依据「根元素 html 标签」的 font-size 来计算最终的值**，这个单位***对移动端***web开发十分实用，通过<u>设置 html 的 font-size 来等比缩放元素的大小</u>。**比如下面的代码，title 所在的 div 标签 width=15*9=135px，height=15*4=60px；
 ```html
 <body>
     <div class="content">
@@ -551,5 +551,58 @@ body {
     height: 10vh;
     font-size: 20px;
     background: red;
+}
+```
+### CSS中的权重
+CSS 的权重可以通过 4 个以 - 分开的数字来表示权重值的大小，比如：1-0-10-0，0-1-1-1，比较的时候先从高位开始对比，如果相同则对比下一位的值。
+> 0-0-1-0 大于 0-0-0-1；          1-1-0-0 大于 1-0-12-30；
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGay4XeiaSgTe7dHrQcECbsV05gcmtA9B48TwCiagxsnz7nSGjmMpkdicpC84lzS5xtibDSWbDWJ9oXdyw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+ * **g：直接在元素中使用属性，权重最高**，可以看做 1-0-0-0；
+ * **z：id选择器，权重次子**，可以看做 0-1-0-0；
+ * **y：类、伪类、属性选择器，权重低**，可以看做 0-0-1-0；
+ * **x：元素、伪元素选择器，权重最低**，可以看做 0-0-0-1；
+
+  ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZVK1Yzmh2rg4gbNX6FbsredMIVCWIsPKN44MBl9SEwQiasppQibASM4RmxIZ14riaM0iblRFT2qU9u9A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+  CSS specifical，可以翻译成 CSS 权重，图中通过鱼和鲨鱼来表示选择器的权重。
+  * ***：通用选择器，权重最低**，就是 0，第 1 张图就是此意；
+  * div、li>ul、body：**元素选择器，有几个值权重值就是几**。li>ul 是两个元素，> 号不会干扰权重计算；第 2、3、4张图能看懂了吧，就是元素选择器，1个元素选择器就是 0-0-1，12个元素选择器就是 0-0-12；
+  * .myClass, [type=chekbox], :only-of-type : **类、属性、伪类选择器**。第 5 张图，一个类选择器，权重值表示为 0-1-0；5-15张图能看懂了吧；
+  * **#myDiv：id选择器**，一条鲨鱼，权重比较高，权重值为 1-0-0；
+  * **style：权重值更高**，权重值为 1-0-0-0；
+  * **!important: 无敌**，我是老大，告诉浏览器必须使用我定义的属性；
+```html
+<div class="box">
+    <p id="name" class="title">第1个p</p>
+    <p id="name1" class="title">第2个p</p>
+    <p id="name2" class="title imp">第3个p</p>
+    <!--  style 的权重中为 1-0-0-0 -->
+    <p id="name3" class="title" style="color: brown">第4个p</p>
+</div>
+```
+```css
+/* 权重值为 0-0-1 （1个元素选择器）*/
+p {
+    color: purple;
+}
+/* 权重值为 0-0-2 （2个元素选择器）*/
+div p {
+    color: bisque;
+}
+/* 权重值为 0-1-0（ class 选择器） */
+.title {
+    color: blue;
+}
+/* 权重值为 1-0-0 （id选择器）*/
+#name, #name1, #name2, #name3 {
+    color: green;
+}
+/* important 不会增加权重值，但是使用它的时候浏览器会直接使用这个属性值忽略其它属性值，它是老大 */
+.imp {
+    color: red !important;
+}
+/* 权重值为 1-0-1 = 1-0-0（id选择器）+ 0-0-1（伪元素选择器）*/
+#name::first-letter {
+    color: peru;
 }
 ```
