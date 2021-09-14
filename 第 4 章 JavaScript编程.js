@@ -27,4 +27,4 @@ function kill(a,b){
     console.log(arguments);  // { '0': 3, '1': 2 }
     return a * a - b;
 }
-kill(3,2)
+kill(3,2) //调用函数不传递参数就是空对象
