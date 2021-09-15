@@ -61,3 +61,67 @@ let person4 = new Person('lefex', 20);
 person4.welcome();
 let person5 = new Person('suyan', 30);
 person5.welcome();
+
+//var 很傻、let 很亲切 、const 更坚定
+var name = 'suyan';
+function callVar(isNew){
+    if(isNew){
+        var age = 20;
+        var age = 24
+    }
+    console.log(age);
+}
+callVar(true)
+// console.log(age); //age is not defined  会报错
+var name = 'elx' //name还可以继续声明
+console.log(name); //elx 
+
+//call这个函数被提升了
+call();
+
+function call(){
+     // name 被提升了
+    console.log(name); //undefined
+    var name = '前代'
+}
+
+//let是块级作用域
+function callLet(isNew){
+    if(isNew){
+        let address  = 'shangrao';
+        // 可以再次被赋值
+        address  = 'xinjiang' 
+        // 不能再次被定义  Identifier 'address' has already been declared
+        // let address = 'BaoTou';  
+        console.log(address); //xinjiang
+    }
+     // 在不同的作用域中是可以重复定义的
+    let address = 'hushi';
+    console.log(address); //hushi
+}
+callLet(true)
+
+//如果在未声明时使用会报错
+call()
+function call(){
+    console.log(name); //Cannot access 'name' before initialization
+    let name = '大苏打' 
+}
+
+// const 也是块级作用域，它与 let 不同的是它的值一旦被指定是不能修改的
+function callConst(isNew){
+    if(isNew){
+        const job = 'ios';
+        // job = 'fe';  //const 变量不能修改 Assignment to constant variable.
+        console.log(job); //ios
+        const info = {
+            top:'123',
+            sex:"男"
+        }
+        info.sex = '女'
+        console.log(info); //{ top: '123', sex: '女' }
+    }
+    const job = 'android';
+    console.log(job); //android
+}
+callConst(true)

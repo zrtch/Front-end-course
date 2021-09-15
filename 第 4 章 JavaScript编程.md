@@ -96,3 +96,109 @@ person4.welcome() //He name is lefex age is 20
 let person5 = new Person("suyan", 30)
 person5.welcome() //He name is suyan age is 30
 ```
+
+### var 很傻、let 很亲切 、const 更坚定
+
+-   **var 的作用域是全局和函数作用域**，在程序设计语言中，**作用域是指变量能够作用的范围**。全局作用域这个好理解，它伴随着页面的整个生命周期。函数作用域指在函数体内定义，可在函数体内任意地方使用。
+
+```javascript
+var name = "suyan"
+function callVar(isNew) {
+    // 使用 var 在函数作用域申明变量 age
+    if (isNew) {
+        var age = 20
+        var age = 24
+    }
+    // 可以正常访问 if {} 块级作用域中定义的 age 变量
+    console.log(age)
+}
+callVar(true)
+// console.log(age); //age is not defined  会报错
+var name = "elx" //name还可以继续声明
+console.log(name) //elx
+```
+
+总之 var 申明变量有很大弊端。**它会使变量提升**，也就是说在 JavaScript 代码执行之前，**JavaScript 引擎把变量和函数的声明部分提升到对应作用域的开始位置**。对于 var 声明的变量，变量提升后，它的初始值是 undefined
+
+```javascript
+//call这个函数被提升了
+call()
+function call() {
+    // name 被提升了
+    console.log(name) //undefined
+    var name = "前代"
+}
+```
+
+-   ES6 中提出了 let，**使用 let 声明的变量是块级作用域**，也就是说**在 { // 变量 } 声明的变量只能在这个块内部使用**。同一变量不可以重复申明。关于块可以这样理解：
+
+```javascript
+for (let i = 0; i < 2; i++) {
+    // 块
+}
+if (true) {
+    // 块
+}
+function call() {
+    // 块
+}
+```
+
+```javascript
+//let是块级作用域
+function callLet(isNew) {
+    if (isNew) {
+        let address = "shangrao"
+        // 可以再次被赋值
+        address = "xinjiang"
+        // 不能再次被定义  Identifier 'address' has already been declared
+        // let address = 'BaoTou';
+        console.log(address) //xinjiang
+    }
+    // 在不同的作用域中是可以重复定义的
+    let address = "hushi"
+    console.log(address) //hushi
+}
+callLet(true)
+```
+
+对于 let 声明的变量，如果在未申明时使用会报错，比如下面的代码：
+
+```javascript
+//如果在未声明时使用会报错
+call()
+function call() {
+    console.log(name) //Cannot access 'name' before initialization
+    let name = "大苏打"
+}
+```
+
+-   **const，也是常量声明最常用的手段。在日常开发中能用 const 就要 const，它能保证程序的状态更稳定**。const 与 let 类似，`不同之处在于它的不变性，使用 const 声明的变量，声明时就要设定初始值。`
+
+```javascript
+// const 也是块级作用域，它与 let 不同的是它的值一旦被指定是不能修改的
+function callConst(isNew) {
+    if (isNew) {
+        const job = "ios"
+        // job = 'fe';  //const 变量不能修改 Assignment to constant variable.
+        console.log(job) //ios
+        const info = {
+            top: "123",
+            sex: "男",
+        }
+        info.sex = "女"
+        console.log(info) //{ top: '123', sex: '女' }
+    }
+    const job = "android"
+    console.log(job) //android
+}
+callConst(true)
+```
+
+> 1.var 声明的变量的**作用域是全局或者函数级别的**，而 let 和 const 声明的**变量是块级的**，一个 { } 表示一个块；
+
+> 2.var 声明的变量可以更新，重新声明；let 声明的变量可以更新但不可以重新声明；**const 声明的变量既不能更新也不能重新声明**；
+
+> 3.var 和 let 申明的变量可以不初始化，但是**const 声明的变量必须初始化**；
+
+> 4.var、let、const **申明的变量都会发生变量提升（先使用后定义），var 申明的变量被初始化为 undefined，而 let 和 const 声明的变量不会被初始化，会报错**。
