@@ -202,3 +202,7 @@ callConst(true)
 > 3.var 和 let 申明的变量可以不初始化，但是**const 声明的变量必须初始化**；
 
 > 4.var、let、const **申明的变量都会发生变量提升（先使用后定义），var 申明的变量被初始化为 undefined，而 let 和 const 声明的变量不会被初始化，会报错**。
+
+### JavaScript 内置对象数组
+
+数组 Array 是 JavaScript 内置对象，它其实是一个函数。在 Chrome 开发者工具 Console 中输入 Array，按回车键，得到以下结果：
