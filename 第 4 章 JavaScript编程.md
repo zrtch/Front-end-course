@@ -206,3 +206,143 @@ callConst(true)
 ### JavaScript 内置对象数组
 
 数组 Array 是 JavaScript 内置对象，它其实是一个函数。在 Chrome 开发者工具 Console 中输入 Array，按回车键，得到以下结果：
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYGnd0Fxj6rObsicULviatAPOGfHIIQwXBKxrAkL9Udml7wHUa0seHSLN2RbhbAR8aZRiaEn24cicPYaw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+**既然是函数，那么它就有一个原型属性 prototype**，打印一下它的值，发现差不多有 30 多个函数，这些函数将在我们后续开发者扮演着重要的角色：
+「温馨提示，如果你不知道某个对象有哪些方法，可以在浏览器的开发者工具的 Console 中输入 xxx.prototype，比如 String.prototype」
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYGnd0Fxj6rObsicULviatAPOt8mISWibzFUJfeSjBesibTrLQ4rNklfuXSWe13E2cToyKuY3Eor4ict7g/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+通常创建数组有 2 种方式，<u>**一种是通过数组直接量 [] ，另一种是通过 new Array。**</u>下面是创建数组的两种方式:
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYGnd0Fxj6rObsicULviatAPOTCIoupFRicjjruib42bYPFp3kiaorXQECg8veKiaCc293wJGn1uuJH3rtg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+如何利用原型对象中的 API 对数组进行操作了。一起看看这些 API。
+
+-   **concat，有拼接的意思，把多个数组中的值合并到一起。**
+
+```javascript
+let cities = ["shangrao", "guangfeng"]
+cities = cities.concat(["xinzhou"], ["wannian"])
+console.log(cities) //[ 'shangrao', 'guangfeng', 'xinzhou', 'wannian' ]
+```
+
+-   **fill ,给某个区间填充指定的值，这个比较有用，下面给数组中所有元素设置为 1。**
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYGnd0Fxj6rObsicULviatAPOoCMCvdLamPvmrmibjzKCQ6hhaE4APkwVzwGc7eKNltMefEUAryckUSA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+-   **find，查找第一个符合条件的元素，返回值为元素的值；**
+
+*   **findIndex，查找第一个符合条件的元素，返回值为元素在数组中的索引**；参数是一个函数。
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYGnd0Fxj6rObsicULviatAPOkP44oWiaPD72DrQP1T9ERvDuLalGEtgsdjv6H5HClO4RwoZc8AayaZg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+```javascript
+let numbers = [0, 5, 3, 6, 2]
+let e = numbers.findIndex(function (e, index, arr) {
+    return e > 5
+})
+console.log(e) //3
+```
+
+-   **forEach**(callback(currentValue [, index [, array]])[,thisArg])，**遍历数组，这种遍历不能暂停，只能遍历到结尾自动结束；**
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYGnd0Fxj6rObsicULviatAPOicukRtjGTDPIP2zKhv5O5Yn5fmU3Kvk2TWSsqxg5PQ1vicRjKJNArNng/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+-   **includes, 数组中是否包含某个数据；**
+
+```javascript
+let cities = [1, 2, 3]
+console.log(cities.includes(1)) //true
+```
+
+**indexOf，某个 item 在数组中的下标，如果下标为 -1 说明数组中不存在这个元素，常用这个判断数组中是否包含某个元素；**
+
+```javascript
+let cities = [1, 2, 3]
+console.log(cities.indexOf(2)) //1
+```
+
+-   **join, 数组中的元素以某个字符串拼接起来；**
+
+```javascript
+let cities = [1, 2, 4, 5]
+console.log(cities.join(".")) //1.2.4.5
+```
+
+-   **lastIndexOf，某个 item 在数组中的下标，如果下标为 -1 说明数组中不存在这个元素，从末尾开始遍历；**
+
+```javascript
+let cities = [1, 2, 3, 7]
+console.log(cities.lastIndexOf(0)) //-1
+```
+
+-   **map，遍历数组中的元素，重新组成一个数组；**
+
+```javascript
+const array1 = [1, 3, 5, 7, 9]
+const map1 = array1.map((x) => x * 2)
+console.log(map1) //[ 2, 6, 10, 14, 18 ]
+```
+
+-   **pop 删除数组中最后一个元素，返回值为删除的元素；**
+
+```javascript
+const array1 = [1, 3, 5, 7, 9]
+console.log(array1.pop()) //9
+```
+
+-   **push 在数组末尾插入一个元素，返回值为数组的长度；**
+
+```javascript
+const array = [1, 2, 3]
+array.push(4, 5)
+console.log(array) //[ 1, 2, 3, 4, 5 ]
+```
+
+-   **reverse 翻转一个数组；**
+
+```javascript
+const array = [1, 2, 3]
+console.log(array.reverse()) //[3,2,1]
+```
+
+-   **shift 删除数组中第一个元素，返回值为删除的元素；**
+
+```javascript
+const array = [1, 2, 3, 4]
+console.log(array.shift()) //1
+```
+
+-   **slice(beg, end)，取数组中某个范围内的元素组合成一个新的数组，不会改变原数组；**
+
+```javascript
+const nums = ["one", "two", "three", "four"]
+console.log(nums.slice(1, 4)) // ['two','three','four']
+```
+
+-   **some 查询数组中是否有符合某个条件的元素，比如查看数组是否存在偶数。**
+
+```javascript
+const array = [1, 2, 3, 4, 5]
+const even = (e) => e % 2 === 0
+console.log(array.some(even)) //true
+```
+
+-   **splice(start[, deleteCount[, item1[, item2[, ...]]]])，删除或插入元素到指定的位置。在数组第二个位置插入元素 drum，不进行删除。**
+
+```javascript
+let array = ["1", "3", "4"]
+let removed = array.splice(1, 0, "2")
+console.log(array) //[ '1', '2', '3', '4' ]
+console.log(removed) //[] no elements removed
+```
+
+-   **unshift 从头在数组中插入元素。**
+
+```javascript
+let array = [3, 4, 5]
+array.unshift(1, 2)
+console.log(array) //[ 1, 2, 3, 4, 5 ]
+```

@@ -125,3 +125,65 @@ function callConst(isNew){
     console.log(job); //android
 }
 callConst(true)
+
+//Array
+let cities = ["shangrao", "guangfeng"]
+cities = cities.concat(["xinzhou"], ["wannian"])
+console.log(cities); //[ 'shangrao', 'guangfeng', 'xinzhou', 'wannian' ]
+
+let numbers = [0, 5, 3, 6, 2];
+let e = numbers.findIndex(function(e,index,arr){
+    return e > 5
+})
+console.log(e); //3
+
+let cities = [1,2,3,4,5]
+cities.forEach(function(e,index){
+    console.log(e);
+})
+
+let cities = [1, 2, 3]
+console.log(cities.includes(1)); //true
+
+let cities = [1, 2, 3]
+console.log(cities.indexOf(2)) //1
+
+let cities = [1, 2, 4, 5]
+console.log(cities.join(".")) //1.2.4.5
+
+let cities = [1, 2, 3, 7]
+console.log(cities.lastIndexOf(0)) //-1
+
+const array1  = [1,3,5,7,9]
+const map1 = array1.map(x => x*2)
+console.log(map1); //[ 2, 6, 10, 14, 18 ]
+
+
+const array1  = [1,3,5,7,9]
+console.log(array1.pop()); //9
+
+const array  = [1,2,3]
+array.push(4,5)
+console.log(array); //[ 1, 2, 3, 4, 5 ]
+
+const array = [1, 2, 3]
+console.log(array.reverse()) //[3,2,1]
+
+const array = [1, 2, 3, 4]
+console.log(array.shift())
+
+const nums= ['one','two','three','four']
+console.log(nums.slice(1,4)); // ['two','three','four']
+
+const array = [1, 2, 3, 4, 5];
+const even = (e)=>e%2===0;
+console.log(array.some(even));
+
+let  array = ['1','3','4']
+let removed = array.splice(1,0,'2')
+console.log(array); //[ '1', '2', '3', '4' ]
+console.log(removed);  //[] no elements removed
+
+let array = [3,4,5]
+array.unshift(1,2)
+console.log(array); //[ 1, 2, 3, 4, 5 ]
