@@ -351,6 +351,6 @@ console.log(array) //[ 1, 2, 3, 4, 5]
 
 本故事纯属虚构，旨在搞懂原型。<br>在地球的一角，荒无人烟，就在 2020 年的时候，这里奇迹般地出现了一位神人，此人生来便拥有一身本领，起名为 Object，寓意为创造万物，万物之源。<br>「公众号素燕注」这里的 Object 就是 JavaScript 中的 Object 对象，所有对象都会指向它。<br> 一天，Object 想着自己活在这个地方太孤单，心想：“如果能造一些和我一样的人类该多好，这样他们就可以帮我干活了。他们需要继承我的能力，这样他们可以直接干活，不需要后续培养干活的能力”。<br>Object 身怀绝技，他把自己的能力交给了一个叫 prototype 的家伙管理着。如果想获取自己的能力，直接输入指令 Object.prototype 即可获取到。<br>「公众号素燕注」这里的 prototype 就是函数原型，Object 其实是一个函数。下面这张图是在 Chrome 浏览器 Console 工具中输入 Object.prototype 得到。
 
--   Object 决定先造一批人类，起名为 Person。说着，他抬起手指在空中写下：
-
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGaCXZYic5LygOZiakpGWr2NnNC0xsIY3Ms6Zx0ys8mr2xhKcHSroUZ6saPzPViaKgyMk6yd2VUQJeqFQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+-   Object 决定先造一批人类，起名为 Person。说着，他抬起手指在空中写下：
