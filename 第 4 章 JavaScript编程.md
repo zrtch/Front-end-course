@@ -353,7 +353,7 @@ console.log(array) //[ 1, 2, 3, 4, 5]
 
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGaCXZYic5LygOZiakpGWr2NnNC0xsIY3Ms6Zx0ys8mr2xhKcHSroUZ6saPzPViaKgyMk6yd2VUQJeqFQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
--   Object 决定先造一批人类，起名为 Person；说着，他抬起手指在空中写下：
+-   Object 决定先造一批人类，起名为 Person；说着，他抬起手指在空中写下 ：
 
 ```javascript
 function Person(name, age) {
