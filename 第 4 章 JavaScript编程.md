@@ -88,8 +88,9 @@ function Person(name, age) {
         console.log("He name is " + this.name + " age is " + this.age)
     }
 }
-通过 new 来调用函数，这个函数便成为了构造函数，并没有特定的方法来定义一个构造函数。
-通过构造函数创建对象也有它的缺点，在每个 person 下都存在一个 welcome 函数。
+
+// 通过 new 来调用函数，这个函数便成为了构造函数，并没有特定的方法来定义一个构造函数。
+// 通过构造函数创建对象也有它的缺点，在每个 person 下都存在一个 welcome 函数。
 
 let person4 = new Person("lefex", 20)
 person4.welcome() //He name is lefex age is 20
