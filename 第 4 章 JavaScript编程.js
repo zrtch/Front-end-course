@@ -68,3 +68,62 @@ person4.welcome() //he name is ch and he age is 24
 let person5 = new Person('chh',25) 
 person5.welcome() //he name is chh and he age is 25
 
+
+var name = 'cherry'
+function callVal(isNew){
+    if(isNew){
+        var age = 20;
+        var age = 24
+    }
+    // 可以正常访问 if {} 块级作用域中定义的 age 变量
+    // 因为是函数作用域
+    console.log(age); 
+} 
+callVal(true) 
+console.log(age); // Uncaught ReferenceError: age is not defined
+console.log(name);
+
+var name = 'left' //name还可以继续声明
+console.log(name);
+ 
+// call 这个函数被提升了
+call() 
+function call(){   // name 被提升了
+    console.log(name);  //undefined
+    var name = 'qianmian '
+}
+
+//let 是块级作用域
+function callLet(isNew){
+    if(isNew){
+        let address = 'sr'
+        address = 'fg' //可以被再次赋值
+        console.log(address); //fg
+        //不能再次定义
+        // let address = 'jx' //SyntaxError: Identifier 'address' has already been declared
+    }
+    //在不同的作用域中是可以重复定义的
+    let address = 'jx'
+    console.log(address); //jx
+}
+callLet(true)
+
+//const 也是块级作用域，它与 let 不同的是它的值一旦被指定是不能修改的
+function callConst(isNew){
+    if(isNew){
+        const job = 'one'
+        //const 变量不能修改
+        // job = 'fe' //TypeError: Assignment to constant variable.
+        console.log(job);
+
+        const info = {
+            tip:'123',
+            num:11
+        }
+        //属性可以修改
+        info.num  = 12
+        console.log(info); //{ tip: '123', num: 12 }
+    }
+}
+callConst(true)
+
