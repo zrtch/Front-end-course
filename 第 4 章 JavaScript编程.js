@@ -127,3 +127,40 @@ function callConst(isNew){
 }
 callConst(true)
 
+//-------------期中考试之var let const 
+var name  = 'one'
+function call(){
+    console.log(name); //
+    var name = '1'
+}
+call()
+
+var name = 'two'
+function call(){
+    console.log(name); //报错   ReferenceError: Cannot access 'name' before initialization
+    let name = '2'
+}
+call()
+
+var name = 'three'
+function call(isTrue){
+    if(isTrue){
+        let name = '3'
+    }
+    console.log(name); //three
+}
+call(true)
+
+var name = 'four'
+function call(isTrue){
+    if(isTrue){
+        console.log(name); //报错 ReferenceError: Cannot access 'name' before initialization
+        let name = '4'
+    }
+}
+call(true)
+
+let from = 'bj'
+console.log(window.from); //undefined
+var type = 1
+console.log(window.type); //undefined
