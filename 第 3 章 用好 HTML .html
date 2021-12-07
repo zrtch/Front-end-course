@@ -1,363 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第 3 章 用好 HTML </title>
-</head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    .container {
-        text-align: center;
-    }
-
-    .line {
-        height: 1px;
-        background-color: gray;
-        margin-bottom: 2px;
-    }
-
-    div>span {
-        font-size: 20px;
-        color: white;
-        margin-right: 20px;
-        line-height: 40px;
-    }
-
-    div :first-child {
-        margin-left: 15px;
-    }
-
-
-    #nav-box {
-        overflow-x: scroll;
-        overflow-y: hidden;
-        background-color: #0077FF;
-        white-space: nowrap;
-    }
-
-    .btn {
-        margin: 20px auto;
-        width: 160px;
-        height: 38px;
-        line-height: 38px;
-        color: #fff;
-        background-color: #0077FF;
-        border-radius: 6px;
-    }
-
-    /* 匹配所有使用属性 "lefe" 的元素 */
-    [lefe] {
-        color: red;
-    }
-
-    /* transparent用来指定全透明色彩 */
-    .triangle {
-        width: 0;
-        border: 20px solid;
-        border-color: #f30 transparent transparent transparent;
-    }
-
-    /* 扩大点击区域 */
-    .icon {
-        background: antiquewhite;
-        width: 15px;
-        height: 15px;
-        border: 11px solid transparent;
-    }
-
-    /* 标准盒模型 */
-    .std-box {
-        width: 100px;
-        height: 120px;
-        border: 10px red solid;
-        margin: 10px;
-        padding: 20px;
-        background: antiquewhite;
-    }
-
-    /* 怪异盒模型 */
-    .guaiyi-box {
-        width: 120px;
-        height: 120px;
-        background: turquoise;
-        border: 10px burlywood solid;
-        margin: 10px;
-        padding: 20px;
-        /* 设置border-box修改盒模型为诡异盒模型 */
-        box-sizing: border-box;
-    }
-
-    .singal-line {
-        display: -webkit-box;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-    }
-
-    /* css动画 */
-    .bg-box {
-        background-color: gray;
-        width: 100px;
-        height: 100px;
-    }
-
-    .bg-box-animation {
-        /* 动画的名字和动画执行的时间，需要把动画绑定到某个选择器上才会执行*/
-        animation: background-change 2s;
-    }
-
-    @keyframes background-change {
-        0% {
-            background-color: antiquewhite;
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>第 3 章 用好 HTML</title>
+    </head>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
         }
 
-        50% {
-            background-color: brown;
+        .container {
+            text-align: center;
         }
 
-        100% {
-            background-color: blue;
-        }
-    }
-
-    .move-box {
-        background-color: red;
-        position: relative;
-        width: 60px;
-        height: 60px;
-        border-radius: 30px;
-    }
-
-    .move-box-animation {
-        animation-name: move;
-        animation-duration: 5s;
-        animation-timing-function: ease-in-out;
-        animation-delay: 1s;
-        animation-iteration-count: 10;
-        animation-direction: alternate;
-        animation-fill-mode: backwards;
-        animation-play-state: running;
-    }
-
-    @keyframes move {
-        0% {
-            left: 0;
-            top: 0;
+        .line {
+            height: 1px;
+            background-color: gray;
+            margin-bottom: 2px;
         }
 
-        25% {
-            left: 300px;
-            top: 0;
+        div > span {
+            font-size: 20px;
+            color: white;
+            margin-right: 20px;
+            line-height: 40px;
         }
 
-        50% {
-            left: 300px;
-            top: 100px;
+        div :first-child {
+            margin-left: 15px;
         }
 
-        75% {
-            left: 0;
-            top: 100px;
+        #nav-box {
+            overflow-x: scroll;
+            overflow-y: hidden;
+            background-color: #0077ff;
+            white-space: nowrap;
         }
 
-        100% {
-            left: 0;
-            top: 0;
+        .btn {
+            margin: 20px auto;
+            width: 160px;
+            height: 38px;
+            line-height: 38px;
+            color: #fff;
+            background-color: #0077ff;
+            border-radius: 6px;
         }
-    }
 
-    #move-transition-box {
-        background-color: cornflowerblue;
-        width: 120px;
-        height: 120px;
-    }
+        /* 匹配所有使用属性 "lefe" 的元素 */
+        [lefe] {
+            color: red;
+        }
 
-    .move-transition {
-        transition-property: background-color, height, width;
-        transition-duration: 1.8s, 1.0s, 1.0s;
-        transition-delay: 0.1s;
-        transition-timing-function: linear;
-    }
+        /* transparent用来指定全透明色彩 */
+        .triangle {
+            width: 0;
+            border: 20px solid;
+            border-color: #f30 transparent transparent transparent;
+        }
 
-    .content {
-        width: 200px;
-        height: 300px;
-        font-size: 20px;
-        background-color: #258BD6;
-    }
+        /* 扩大点击区域 */
+        .icon {
+            background: antiquewhite;
+            width: 15px;
+            height: 15px;
+            border: 11px solid transparent;
+        }
 
-    .title {
-        width: 9em;
-        height: 4em;
-        background-color: #FE7235;
-    }
+        /* 标准盒模型 */
+        .std-box {
+            width: 100px;
+            height: 120px;
+            border: 10px red solid;
+            margin: 10px;
+            padding: 20px;
+            background: antiquewhite;
+        }
 
-    html {
-        font-size: 10px;
-    }
+        /* 怪异盒模型 */
+        .guaiyi-box {
+            width: 120px;
+            height: 120px;
+            background: turquoise;
+            border: 10px burlywood solid;
+            margin: 10px;
+            padding: 20px;
+            /* 设置border-box修改盒模型为诡异盒模型 */
+            box-sizing: border-box;
+        }
 
-    .rem-content {
-        width: 200px;
-        height: 300px;
-        font-size: 20px;
-        margin-top: 10px;
-        background-color: #258BD6;
-        margin-bottom: 20px;
-    }
+        .singal-line {
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
 
-    .rem {
-        font-size: 10px;
-        width: 9rem;
-        height: 4rem;
-        background-color: #FE7235;
+        /* css动画 */
+        .bg-box {
+            background-color: gray;
+            width: 100px;
+            height: 100px;
+        }
 
-    }
+        .bg-box-animation {
+            /* 动画的名字和动画执行的时间，需要把动画绑定到某个选择器上才会执行*/
+            animation: background-change 2s;
+        }
 
-    .vw-content {
-        width: 50vw;
-        height: 50vh;
-        font-size: 20px;
-        background-color: rebeccapurple;
-    }
+        @keyframes background-change {
+            0% {
+                background-color: antiquewhite;
+            }
 
-    .vmax-content {
-        width: 10vmax;
-        height: 10vh;
-        font-size: 20px;
-        background-color: red;
-    }
+            50% {
+                background-color: brown;
+            }
 
-
-
-    /* 权重值为 0-0-1 （1个元素选择器）*/
-    p {
-        color: purple;
-    }
-
-    /* 权重值为 0-0-2 （2个元素选择器）*/
-    div p {
-        color: bisque;
-    }
-
-    /* 权重值为 0-1-0（ class 选择器） */
-    .title {
-        color: blue;
-        background-color: #fff;
-    }
-
-    /* 权重值为 1-0-0 （id选择器）*/
-    #name,
-    #name1,
-    #name2,
-    #name3 {
-        color: green;
-    }
-
-    /* important 不会增加权重值，但是使用它的时候浏览器会直接使用这个属性值忽略其它属性值，它是老大 */
-    .imp {
-        color: red !important;
-    }
-
-    /* 权重值为 1-0-1 = 1-0-0（id选择器）+ 0-0-1（伪元素选择器）*/
-    #name::first-letter {
-        color: peru;
-    }
-</style>
-
-<body>
-    <!-- 左右滚动demo -->
-    <div class="container">
-        <h1>《前端小课》</h1>
-        <div class="line"></div>
-        <div id="nav-box">
-            <span id="a">超越技术</span>
-            <span id="b">数据结构</span>
-            <span id="c">前端小课</span>
-            <span id="d">知识小集</span>
-            <span id="e">iOS开发</span>
-            <span id="f">算法</span>
-        </div>
-        <div class="btn" onclick="clickScroll()">
-            点击滚动带单
-        </div>
-
-        <div lefe>Tomatoes</div>
-
-        <!-- boder - 倒三角形图标 -->
-        <div class="triangle"></div>
-        <div class="icon"></div>
-
-        <!-- 标准盒模型 -->
-        <div class="std-box"></div>
-
-        <!-- 怪异盒模型 -->
-        <div class="guaiyi-box"></div>
-
-        <!-- 单行显示 -->
-        <div class="singal-line">通过 ::before 和 ::after
-            可以给已知元素的前面或者后面拼接新的内容，好像添加了新的元素，我觉得这应该就是伪元素中“伪”的真正含义吧，它并不是一个真正的元素，但可以充当元素的角色。除了这两个伪元素外，还有其它的伪元素
-        </div>
-
-        <!-- css动画之animation -->
-        <div class="bg-box bg-box-animation"></div>
-        <div class="move-box move-box-animation"></div>
-
-        <!-- div动画之transition -->
-        <div id="move-transition-box" class="move-transition" onclick="scale()"></div>
-
-        <!-- 相对单位之em -->
-        <div class="content">
-            <div class="title"></div>
-        </div>
-
-        <div class="rem-content">
-            <div class="rem"></div>
-        </div>
-
-        <div class="vw-content"></div>
-
-        <div class="vmax-content"></div>
-
-        <!-- css权重 -->
-        <div class="box">
-            <p id="name" class="title">第1个p</p>
-            <p id="name1" class="title">第2个p</p>
-            <p id="name2" class="title imp">第3个p</p>
-            <!--  style 的权重中为 1-0-0-0 -->
-            <p id="name3" class="title" style="color: brown">第4个p</p>
-        </div>
-    </div>
-
-    <script>
-        // 让某个菜单滚到中间
-        function clickScroll() {
-            let dBox = document.getElementById('d')
-            if (dBox) {
-                let left = dBox.offsetLeft;
-                let navBox = document.getElementById("nav-box");
-                if (navBox) {
-                    navBox.scrollTo(navBox.clientWidth / 2 - dBox.clientWidth / 2 - 15, 0)
-                }
+            100% {
+                background-color: blue;
             }
         }
 
-        //transition过渡动画
-        function scale() { //当点击方块的时候，方块会变大，颜色逐渐变成红色。
-            let tbox = document.getElementById('move-transition-box');
-            tbox.style.height = 240 + 'px';
-            tbox.style.width = 240 + 'px';
-            tbox.style.backgroundColor = 'orange';
+        .move-box {
+            background-color: red;
+            position: relative;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
         }
-    </script>
 
-</body>
+        .move-box-animation {
+            animation-name: move;
+            animation-duration: 5s;
+            animation-timing-function: ease-in-out;
+            animation-delay: 1s;
+            animation-iteration-count: 10;
+            animation-direction: alternate;
+            animation-fill-mode: backwards;
+            animation-play-state: running;
+        }
 
+        @keyframes move {
+            0% {
+                left: 0;
+                top: 0;
+            }
+
+            25% {
+                left: 300px;
+                top: 0;
+            }
+
+            50% {
+                left: 300px;
+                top: 100px;
+            }
+
+            75% {
+                left: 0;
+                top: 100px;
+            }
+
+            100% {
+                left: 0;
+                top: 0;
+            }
+        }
+
+        #move-transition-box {
+            background-color: cornflowerblue;
+            width: 120px;
+            height: 120px;
+        }
+
+        .move-transition {
+            transition-property: background-color, height, width;
+            transition-duration: 1.8s, 1s, 1s;
+            transition-delay: 0.1s;
+            transition-timing-function: linear;
+        }
+
+        .content {
+            width: 200px;
+            height: 300px;
+            font-size: 20px;
+            background-color: #258bd6;
+        }
+
+        .title {
+            width: 9em;
+            height: 4em;
+            background-color: #fe7235;
+        }
+
+        html {
+            font-size: 10px;
+        }
+
+        .rem-content {
+            width: 200px;
+            height: 300px;
+            font-size: 20px;
+            margin-top: 10px;
+            background-color: #258bd6;
+            margin-bottom: 20px;
+        }
+
+        .rem {
+            font-size: 10px;
+            width: 9rem;
+            height: 4rem;
+            background-color: #fe7235;
+        }
+
+        .vw-content {
+            width: 50vw;
+            height: 50vh;
+            font-size: 20px;
+            background-color: rebeccapurple;
+        }
+
+        .vmax-content {
+            width: 10vmax;
+            height: 10vh;
+            font-size: 20px;
+            background-color: red;
+        }
+
+        /* 权重值为 0-0-1 （1个元素选择器）*/
+        p {
+            color: purple;
+        }
+
+        /* 权重值为 0-0-2 （2个元素选择器）*/
+        div p {
+            color: bisque;
+        }
+
+        /* 权重值为 0-1-0（ class 选择器） */
+        .title {
+            color: blue;
+            background-color: #fff;
+        }
+
+        /* 权重值为 1-0-0 （id选择器）*/
+        #name,
+        #name1,
+        #name2,
+        #name3 {
+            color: green;
+        }
+
+        /* important 不会增加权重值，但是使用它的时候浏览器会直接使用这个属性值忽略其它属性值，它是老大 */
+        .imp {
+            color: red !important;
+        }
+
+        /* 权重值为 1-0-1 = 1-0-0（id选择器）+ 0-0-1（伪元素选择器）*/
+        #name::first-letter {
+            color: peru;
+        }
+    </style>
+
+    <body>
+        <!-- 左右滚动demo -->
+        <div class="container">
+            <h1>《前端小课》</h1>
+            <div class="line"></div>
+            <div id="nav-box">
+                <span id="a">超越技术</span>
+                <span id="b">数据结构</span>
+                <span id="c">前端小课</span>
+                <span id="d">知识小集</span>
+                <span id="e">iOS开发</span>
+                <span id="f">算法</span>
+            </div>
+            <div class="btn" onclick="clickScroll()">点击滚动带单</div>
+
+            <div lefe>Tomatoes</div>
+
+            <!-- boder - 倒三角形图标 -->
+            <div class="triangle"></div>
+            <div class="icon"></div>
+
+            <!-- 标准盒模型 -->
+            <div class="std-box"></div>
+
+            <!-- 怪异盒模型 -->
+            <div class="guaiyi-box"></div>
+
+            <!-- 单行显示 -->
+            <div class="singal-line">
+                通过 ::before 和 ::after
+                可以给已知元素的前面或者后面拼接新的内容，好像添加了新的元素，我觉得这应该就是伪元素中“伪”的真正含义吧，它并不是一个真正的元素，但可以充当元素的角色。除了这两个伪元素外，还有其它的伪元素
+            </div>
+
+            <!-- css动画之animation -->
+            <div class="bg-box bg-box-animation"></div>
+            <div class="move-box move-box-animation"></div>
+
+            <!-- div动画之transition -->
+            <div id="move-transition-box" class="move-transition" onclick="scale()"></div>
+
+            <!-- 相对单位之em -->
+            <div class="content">
+                <div class="title"></div>
+            </div>
+
+            <div class="rem-content">
+                <div class="rem"></div>
+            </div>
+
+            <div class="vw-content"></div>
+
+            <div class="vmax-content"></div>
+
+            <!-- css权重 -->
+            <div class="box">
+                <p id="name" class="title">第1个p</p>
+                <p id="name1" class="title">第2个p</p>
+                <p id="name2" class="title imp">第3个p</p>
+                <!--  style 的权重中为 1-0-0-0 -->
+                <p id="name3" class="title" style="color: brown">第4个p</p>
+            </div>
+        </div>
+
+        <script>
+            // 让某个菜单滚到中间
+            function clickScroll() {
+                let dBox = document.getElementById("d")
+                if (dBox) {
+                    let left = dBox.offsetLeft
+                    let navBox = document.getElementById("nav-box")
+                    if (navBox) {
+                        navBox.scrollTo(navBox.clientWidth / 2 - dBox.clientWidth / 2 - 15, 0)
+                    }
+                }
+            }
+
+            //transition过渡动画
+            function scale() {
+                //当点击方块的时候，方块会变大，颜色逐渐变成红色。
+                let tbox = document.getElementById("move-transition-box")
+                tbox.style.height = 240 + "px"
+                tbox.style.width = 240 + "px"
+                tbox.style.backgroundColor = "orange"
+            }
+
+            let from = "bj"
+            console.log(window.from) //undefined
+            var type = 1
+            console.log(window.type) //1
+        </script>
+    </body>
 </html>

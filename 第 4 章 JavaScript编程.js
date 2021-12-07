@@ -128,13 +128,25 @@ function callConst(isNew){
 callConst(true)
 
 //-------------期中考试之var let const 
+//---第一题
 var name  = 'one'
 function call(){
     console.log(name); //
     var name = '1'
 }
 call()
+//答案：代码在执行过程中需要创建对应的执行上下文，上面的代码会创建两个执行上下文，全局执行上下文和函数执行上下文。当函数执行的时候会从当前的执行上下文中查找变量，如果存在就使用当前上下文的变量，否则到全局执行上下文中查找变量。故本题的答案为 undefined。
+var name = undefined;
+name = 'suyan';
+function call() {
+    var name = undefined;
+    // name 的值是什么 ?
+    console.log(name);
+    name = '前端小课';
+}
+call();
 
+//第二题 ： 别被函数外部那个 name 给迷惑了，在函数执行上下文中已经找到了变量，不会到全局找的。故结果为 error。
 var name = 'two'
 function call(){
     console.log(name); //报错   ReferenceError: Cannot access 'name' before initialization
@@ -142,6 +154,7 @@ function call(){
 }
 call()
 
+//第三题 ： 让你明白什么是块级作用域，if{}它已经构成了一个块级作用域，所以使用let定义的变量只能在这里面作用，自然不会影响到全局的name。所以为three
 var name = 'three'
 function call(isTrue){
     if(isTrue){
@@ -151,6 +164,7 @@ function call(isTrue){
 }
 call(true)
 
+//第四题 : if{}已经构成一个块级作用域，这个块内部的变量不能被提前使用。所以为error
 var name = 'four'
 function call(isTrue){
     if(isTrue){
@@ -160,7 +174,23 @@ function call(isTrue){
 }
 call(true)
 
+//第五题：使用 var 声明的变量会被挂载到 window 对象上，而使用 let 和  const 不会。
 let from = 'bj'
 console.log(window.from); //undefined
 var type = 1
-console.log(window.type); //undefined
+console.log(window.type); //1
+
+//------------JavaScript 内置对象数组 
+let names = new Array('ch','god') //通过new Array创建
+console.log(names); //[ 'ch', 'god' ]
+let name = [1,2] //2 是通过数组直接量
+console.log(name); //[ 1, 2 ]
+
+// concat, 有拼接的意思，把多个数组中的值合并到一起
+let citys = ['shangrao','guangfeng']
+citys = citys.concat(['yushan'],['wannian'])
+console.log(citys); //[ 'shangrao', 'guangfeng', 'yushan', 'wannian' ]
+
+//fill 给某个区间填充指定的值，这个比较有用。fill(value:c T, start?: number, end?: number): this; 
+let arr = new Array(5)
+console.log(arr.fill(2,0));  //[ 2, 2, 2, 2, 2 ]
