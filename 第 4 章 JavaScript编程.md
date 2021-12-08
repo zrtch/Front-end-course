@@ -271,6 +271,14 @@ console.log(cities) //[ 'shangrao', 'guangfeng', 'xinzhou', 'wannian' ]
 
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYGnd0Fxj6rObsicULviatAPOoCMCvdLamPvmrmibjzKCQ6hhaE4APkwVzwGc7eKNltMefEUAryckUSA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
+-   **copyWithin: 复制数组中某个区间的数据到指定位置，会修改原数组。array.copyWithin(target：必需。复制到指定目标索引位置。, start：可选。元素复制的起始位置。, end：可选。停止复制的索引位置)：**
+
+```javascript
+//复制数组的前面两个元素到第三和第四个位置上：
+var fruits = ["Banana", "Orange", "Apple", "Mango", "Kiwi", "Papaya"]
+console.log(fruits.copyWithin(2, 0, 2)) //[ 'Banana', 'Orange', 'Banana', 'Orange', 'Kiwi', 'Papaya' ]
+```
+
 -   **find，查找第一个符合条件的元素，返回值为元素的值；**
 
 *   **findIndex，查找第一个符合条件的元素，返回值为元素在数组中的索引**；参数是一个函数。

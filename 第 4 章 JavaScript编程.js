@@ -194,3 +194,27 @@ console.log(citys); //[ 'shangrao', 'guangfeng', 'yushan', 'wannian' ]
 //fill 给某个区间填充指定的值，这个比较有用。fill(value:c T, start?: number, end?: number): this; 
 let arr = new Array(5)
 console.log(arr.fill(2,0));  //[ 2, 2, 2, 2, 2 ]
+
+//copyWithin: 复制数组中某个区间的数据到指定位置，会修改原数组。array.copyWithin(target：必需。复制到指定目标索引位置。, start：可选。元素复制的起始位置。, end：可选。停止复制的索引位置)：
+//复制数组的前面两个元素到第三和第四个位置上：
+var fruits = ["Banana", "Orange", "Apple", "Mango", "Kiwi", "Papaya"];
+console.log(fruits.copyWithin(2, 0, 2)); //[ 'Banana', 'Orange', 'Banana', 'Orange', 'Kiwi', 'Papaya' ]
+
+//find, 查找第一个符合条件的元素，返回值为元素的值
+let arr = [1,4,6,8] 
+console.log(arr.find(e=>e>1)); //4
+
+//findIndex: 查找第一个符合条件的元素。返回为元素在数组中的索引，参数是一个函数
+let arr = [1,2,3,4,5]
+console.log(arr.findIndex(e=>e>2));//2 第一种写法
+
+let e = arr.findIndex(function(e){ //第二种写法
+    return e > 2
+})
+console.log(e); //2
+
+//forEach，遍历数组，这种便力不能暂停，只能遍历到结尾自动结束
+let arr = ['apple','banner','pear']
+arr.forEach(e => {
+    console.log(e); //apple banner pear
+});
