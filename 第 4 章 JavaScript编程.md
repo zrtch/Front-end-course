@@ -295,7 +295,12 @@ console.log(e) //3
 
 -   **forEach**(callback(currentValue [, index [, array]])[,thisArg])，**遍历数组，这种遍历不能暂停，只能遍历到结尾自动结束；**
 
-![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGYGnd0Fxj6rObsicULviatAPOicukRtjGTDPIP2zKhv5O5Yn5fmU3Kvk2TWSsqxg5PQ1vicRjKJNArNng/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+```javascript
+let arr = ["apple", "banner", "pear"]
+arr.forEach((e) => {
+    console.log(e) //apple banner pear
+})
+```
 
 -   **includes, 数组中是否包含某个数据；**
 

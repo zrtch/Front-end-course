@@ -218,3 +218,17 @@ let arr = ['apple','banner','pear']
 arr.forEach(e => {
     console.log(e); //apple banner pear
 });
+
+//indexOf, 某个item在数组中的下标，如果下标为-1，说明数组中不存在这个元素，常用这个判断数组中是否包含某个元素
+let city = [1,2,3]
+console.log(city.indexOf(2)); // 1
+console.log(city.indexOf(-1)); // -1
+
+//join, 数组中元素以某个字符串拼接起来
+let arr = ['a','b','c','d']
+console.log(arr.join('.'));// "a.b.c.d"
+
+//map，遍历数组中的元素，重新组成一个数组
+const arr1 = [1,3,4,5,7]
+const map1 = arr1.map( x => x*2 )
+console.log(map1); //[ 2, 6, 8, 10, 14 ]
