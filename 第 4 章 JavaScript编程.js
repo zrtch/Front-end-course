@@ -232,3 +232,18 @@ console.log(arr.join('.'));// "a.b.c.d"
 const arr1 = [1,3,4,5,7]
 const map1 = arr1.map( x => x*2 )
 console.log(map1); //[ 2, 6, 8, 10, 14 ]
+
+//pop，删除数组最后一个元素，返回值为删除的元素
+const arr = [1,2,3,4]
+console.log(arr.pop()); //4
+
+//push，在数组末尾插入一个元素。返回值为数组的长度
+const arr = [1,2,3,4]
+console.log(arr.push("5","6"));  // 6
+console.log(arr); //[ 1, 2, 3, 4, '5', '6' ]
+
+//reverse，翻转一个数组
+const arr = [1,2,3,4]
+console.log(arr.reverse());
+const obj = [{name:1},{name:2}]
+console.log(obj.reverse()); //[ { name: 2 }, { name: 1 } ]

@@ -356,8 +356,10 @@ console.log(array) //[ 1, 2, 3, 4, 5 ]
 -   **reverse 翻转一个数组；**
 
 ```javascript
-const array = [1, 2, 3]
-console.log(array.reverse()) //[3,2,1]
+const arr = [1, 2, 3, 4]
+console.log(arr.reverse()) // [ 4, 3, 2, 1 ]
+const obj = [{ name: 1 }, { name: 2 }]
+console.log(obj.reverse()) //[ { name: 2 }, { name: 1 } ]
 ```
 
 -   **shift 删除数组中第一个元素，返回值为删除的元素；**
