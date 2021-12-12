@@ -247,3 +247,44 @@ const arr = [1,2,3,4]
 console.log(arr.reverse());
 const obj = [{name:1},{name:2}]
 console.log(obj.reverse()); //[ { name: 2 }, { name: 1 } ]
+
+//shift，删除数组中第一个元素，返回值为删除的元素
+ const arr  = ['apple','banner','pear']
+ console.log(arr.shift()); //apple
+
+ //slice(beg, end)，取数组中某个范围内的元素组合成一个新的数组，不会改变原数组；
+ const arr = ['one','two','three','four','five']
+ console.log(arr.slice(0,2)); // [ 'one', 'two' ]
+
+ //some，查询数组中是否有符合某个条件的元素，比如如查看数据是否存在偶数
+ const arr = [1,2,3,4,5]
+ const even = (ele) => ele % 2 === 0
+ console.log(arr.some(even)); //true
+
+ //splice(start[,deleteCount[,item1[,item2[,...]]]])，删除或插入元素到指定的位置。在数组第二个位置插入元素drum，不进行删除。
+ let arr = ['one','two','three','four','five']
+ let removed = arr.splice(2,0,'six')
+ console.log(arr); // [ 'one', 'two', 'six', 'three', 'four', 'five' ]
+ console.log(removed); // removed is [], no elements removed
+
+ //unshift,从头在数组插入元素
+ const arr = [1,2,3]
+ console.log(arr.unshift(-1,0)); //返回数组长度 5
+ console.log(arr); //[ -1, 0, 1, 2, 3 ]
+
+ //题目一
+ let names = ['one','two']
+ names.length = 0;
+ console.log(names[0]); //undefined
+
+ //题目二
+ var numbers = []
+ for(var i = 0; i<4; i++){
+    numbers.push(function(){
+        return i;
+    })
+ }
+ var result = numbers.map(function(e){
+     return e()
+ })
+ console.log(result);
