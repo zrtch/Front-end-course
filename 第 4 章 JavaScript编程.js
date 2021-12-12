@@ -286,5 +286,6 @@ console.log(obj.reverse()); //[ { name: 2 }, { name: 1 } ]
  }
  var result = numbers.map(function(e){
      return e()
- })
- console.log(result);
+ }) 
+ console.log(result); //[ 4, 4, 4, 4 ]
+  
