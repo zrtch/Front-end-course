@@ -387,10 +387,9 @@ console.log(array.some(even)) //true
 -   **splice(start[, deleteCount[, item1[, item2[, ...]]]])，删除或插入元素到指定的位置。在数组第二个位置插入元素 drum，不进行删除。**
 
 ```javascript
-let array = ["1", "3", "4"]
-let removed = array.splice(1, 0, "2")
-console.log(array) //[ '1', '2', '3', '4' ]
-console.log(removed) //[] no elements removed
+let myFish = ["one", "two", "three", "four"]
+let removed = myFish.splice(2, 0, "drum")
+console.log(myFish) //["one", "two", "drum","three", "four"]
 ```
 
 -   **unshift 从头在数组中插入元素。**
@@ -407,16 +406,6 @@ console.log(array) //[ 1, 2, 3, 4, 5]
 
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGaCXZYic5LygOZiakpGWr2NnNC0xsIY3Ms6Zx0ys8mr2xhKcHSroUZ6saPzPViaKgyMk6yd2VUQJeqFQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
--   Object 决定先造一批人类，起名为 Person；说着，他抬起手指在空中写下 ：
-
-```javascript
-function Person(name, age) {
-    this.name = name
-    this.age = age
-    this.welcome = function () {
-        console.log("hello ", this.name)
-    }
-}
-```
-
-这些字符就如同一个「人体模板」，约定了一个人该有的特征。以后如果想创建人类的时候只需通过这个「人体模板」创建一个人类即可。随后 Object 挥着手指在天空中创建了 1 万个人。
+-   每一个函数都会有一个原型属性 prototype
+-   通过 new + [函数] 的方式会创建一个对象，这个函数被称为构造函数，浏览器会给被创建的对象添加一个属性**proto**属性，这个属性指向构造函数的 prototype。
+-   通过**proto**属性可以实现 Js 中的继承，不过在 ES6 中可以通过关键字 class 定义类来实现
