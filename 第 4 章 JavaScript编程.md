@@ -409,3 +409,11 @@ console.log(array) //[ 1, 2, 3, 4, 5]
 -   每一个函数都会有一个原型属性 prototype
 -   通过 new + [函数] 的方式会创建一个对象，这个函数被称为构造函数，浏览器会给被创建的对象添加一个属性**proto**属性，这个属性指向构造函数的 prototype。
 -   通过**proto**属性可以实现 Js 中的继承，不过在 ES6 中可以通过关键字 class 定义类来实现
+
+### 从源码到抽象语法树可视化
+
+JavaScript 代码被执行的时候大致过程如图：
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGbFpLbj7qicdq50aJ9u0yDRTkcDJ9Yp5dHx19x5VHBoTkaUqUkUWx64NlPcAfTyUcOD4olEib22L87A/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+其中关键的一个环节是生成抽象语法树（AST）。在词法分析的过程中，JavaScript 引擎把源代码转换成一个个 Token，有人可能就会问什么是 Token。
+https://resources.jointjs.com/demos/javascript-ast 使用它可以轻松把 JavaScript 转换成抽象语法树，这有助于分析 JavaScript 代码。
