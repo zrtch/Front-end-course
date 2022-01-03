@@ -417,3 +417,36 @@ JavaScript 代码被执行的时候大致过程如图：
 
 其中关键的一个环节是生成抽象语法树（AST）。在词法分析的过程中，JavaScript 引擎把源代码转换成一个个 Token，有人可能就会问什么是 Token。
 https://resources.jointjs.com/demos/javascript-ast 使用它可以轻松把 JavaScript 转换成抽象语法树，这有助于分析 JavaScript 代码。
+
+### 字节码与二进制的“样貌”
+
+ByteCode（字节码） 和 Mechine Code（机器码）
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGaI0QhLCEcymhYrNy8wia4iapatkR5tzP473zA9oibXDgFbfOMqwEyD9QFiaMAXRY2hZRXus87RHDAzWg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGbsHeTcsfAZObGfsE64rIJrSlhyOTGmJ6UpCSHTtHts4W3PgRzDAr2bdq61GJW1jkHmfmnOhLtib8Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+V8 是谷歌开源的 JavaScript 引擎，被用于 Chrome 和 Node.js ，主要由上图中的一些「零件」组成，不同「零件」的分工不同，犹如炒菜的时候盘子、锅、勺子、铲子的作用，分工明确。
+
+程序最终会被 CPU 执行，不同架构 CPU 提供的指令是不同的，而我们写的**一套代码需要跑到不同架构的 CPU 上**，这就需要 JavaScript 引擎来做这件事情。最初的时候 V8 直接**通过 AST 生成对应机器码**，后来爆出一堆问题，比如内存占用大、启动时间长等。
+
+为了解决直接生成机器码的缺点，引入了字节码（图中的 ByteCode）。当别人问你什么是字节码的时候，你脑海中需要捕捉到一个“面貌”。从图中可以看到 ByteCode 是通过 Ignition 生成。
+
+**字节码是机器码的（二进制）一种抽象**，你可以把它理解为一种到机器码的中间码。由字节码转换成机器码非常容易。我们看一段代码被转换成字节码的“面貌”（注：只有函数被调用时才会生成字节码，下面的代码如果不调用 lefex 函数，将不会生成字节码）：
+
+```javascript
+function lefex(name, age) {
+    var lef_name = name
+    if (lef_name) {
+        lef_name = "suyan work again"
+    }
+    let lef_age = age
+}
+lefex()
+```
+
+通过 node 添加参数 --print-bytecode 生成字节码：node --print-bytecode bcode2.js > ./test.txt，生成的字节码如下，是不是有一种汇编的感觉：
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGaI0QhLCEcymhYrNy8wia4iapZ0gQHRdNmXXSZZC79pLvUe8zz4ia8JkNyIY8jsaBv8yOoobCpkIzWJQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+那机器码又长什么样子呢？通过 node 加参数 --print-code 运行 JavaScript 文件：
+node --print-code bcode2.js > ./tcode.js
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGbsHeTcsfAZObGfsE64rIJrYmm8a08LzS6abeO8oXEXg0SIgB8VAScyVnzgKVUM3OmGA2Y3d8BTeg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
