@@ -302,3 +302,17 @@ Person.prototype.welcome = function () {
 const suyan = new Person('suyan', 1);
 const lefe = new Person('Lefe', 2);
 console.log(suyan);
+
+
+//---------执行上下文
+function log () {
+    console.log(name);
+}
+function welcome () {
+    var name = 'qiaankun';
+    log()
+}
+var name = 'hello'
+welcome() //hello
+
+// 上面这段代码会存在一个全局作用域，log 函数作用域和 welcome 函数作用域，JavaScript 代码执行的时候，会从当前作用域查找变量，如果未找到会到它的外层作用域中查找。log 函数的外层作用域是全局作用域，故 log 函数的打印值为全局作用域定义的变量。打印结果为“hello”。

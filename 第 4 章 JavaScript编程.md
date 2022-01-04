@@ -450,3 +450,24 @@ lefex()
 node --print-code bcode2.js > ./tcode.js
 
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGbsHeTcsfAZObGfsE64rIJrYmm8a08LzS6abeO8oXEXg0SIgB8VAScyVnzgKVUM3OmGA2Y3d8BTeg/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+### 执行上下文与调用栈
+
+当 JavaScript 代码被执行的时候，首先会创建一个「全局执行上下文」，你可以把执行上下文理解为一段代码要执行时需要准备的环境，它主要包含**变量环境、词法环境、this 等**。
+
+代码执行时需要经历两个阶段：**编译、执行**。编译完成后需要创建全局执行上下文。var 定义的变量和函数声明会被保存到变量环境中，let、const 定义的变量会保存到词法环境中。**变量提升的原理就是把变量的声明提前注入到执行上下文中**
+
+```javascript
+function log(){
+    console.log(name)
+}
+function welcome(){
+    var name = 'world',
+    log()
+}
+var name = 'hello',
+welcome() //hello
+```
+
+上面这段代码会存在一个全局作用域，log 函数作用域和 welcome 函数作用域，JavaScript 代码执行的时候，会从当前作用域查找变量，如果未找到会到它的外层作用域中查找。log 函数的外层作用域是全局作用域，故 log 函数的打印值为全局作用域定义的变量。打印结果为 "hello"。
+当 log 和 welcome 函数执行完后，它们的**执行上下文会依次出栈，并释放它使用的内存空间**。全局执行上下文的内存空间会随着页面的生命周期一直保留着。
