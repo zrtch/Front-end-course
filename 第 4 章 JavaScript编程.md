@@ -471,3 +471,61 @@ welcome() //hello
 
 上面这段代码会存在一个全局作用域，log 函数作用域和 welcome 函数作用域，JavaScript 代码执行的时候，会从当前作用域查找变量，如果未找到会到它的外层作用域中查找。log 函数的外层作用域是全局作用域，故 log 函数的打印值为全局作用域定义的变量。打印结果为 "hello"。
 当 log 和 welcome 函数执行完后，它们的**执行上下文会依次出栈，并释放它使用的内存空间**。全局执行上下文的内存空间会随着页面的生命周期一直保留着。
+
+### 看透变量提升与块级作用域实现的原理
+
+JavaScript 是如何实现变量提升的，ES6 中又是如何通过 let、const 实现块级作用域的？
+
+在 JavaScript 主要有两种情况会创建执行上下文，一种是全局 JavaScript 代码，另一种是函数。而「变量提升」和「块级作用域」主要依托于执行上下文。
+
+```javascript
+function look() {
+    var name = "素燕"
+    let age = 19
+    if (age > 18) {
+        let money = 0
+        var from = "home"
+        if (money <= 0) {
+            money += 10
+            let isNeedMore = money <= 10
+            if (isNeedMore) {
+                money += 10
+                let isEnd = money > 10
+                var canGo = isEnd
+            }
+            isNeedMore = false
+        }
+        money = 0
+    } else {
+        let needAge = 18 - age
+        var add = age + needAge
+    }
+}
+look()
+```
+
+1. 创建全局执行上下文并压入调用栈，全局只定义了一个函数 look；
+   ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGb6J47fAHniam3hoj8ygvRKME34RG4tic4tUIowfAfnGErqOzL1nHQ1ZCjyictgjFGJVSA9mFWyZpBDQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+2. 创建函数 look 的执行上下文；
+
+    第一步：把通过 var 申明的变量加入到变量环境中，并初始化为 undefined。使用 var 声明的变量有 name、from、canGo、addd。把 let 声明的变量加入到词法环境中，let 申明的变量属于块级作用域，此时在当前块中只有 age。在词法环境中，**利用栈来管理不同的块级作用域，当有新的块级作用域时会入栈，块级作用域中的代码执行完后会进行出栈操作。**
+    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGb6J47fAHniam3hoj8ygvRKMLBEperTIicVPxOVWt0pQic5nTHqyiaJBga7iaJp02W2cic2nxJ05EaeINicw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+    此时的调用栈为：
+    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGb6J47fAHniam3hoj8ygvRKMJ0XCLbY1ict9eRUjj5ibalnGa1cR0hJMOyP6Id3crtAwBPzatDlicMtBA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+    第二步：当执行到第 5 句的时候，此时出现了一个新的块。创建一个新的块。此时只有一个变量 money，加入词法环境中。需要强调一点，块级作用域的变量是在代码块要执行时才会被加入到词法环境中，块与块之间相互独立，通过栈来管理同一个执行上下文的块。
+
+    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGb6J47fAHniam3hoj8ygvRKMR3zdgK2n0iaVExNic3ugiaNfx49icncic4sBYibyF9uyDFtcNZ7BhcW2pUCw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+    第三步，执行到第 8 句的时候，又遇到一个块，此时有一个变量 isNeedMore，加入到词法环境中。
+    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGb6J47fAHniam3hoj8ygvRKM1omVJcdzRD4emsqvEw1OUUJicj12dgXG4ib8bIFP4SZad8fX5iajwEHhA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+    第四步，执行到第 11 句的时候，又遇到一个块，此时有一个变量 isEnd，加入到词法环境中。
+    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGb6J47fAHniam3hoj8ygvRKMIGxubkbmfniaEEvMCqThJqVLiaFNL0AGUDatwl9sriaib7fSR6AickrqmKQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+    第五步，这是函数 look 执行上下文中最后一个块。当执行到第 15 句的时候，词法环境中最顶端的块将被出栈。
+    ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGb6J47fAHniam3hoj8ygvRKMMNVPhr9PuNkGlMnKnIJXUPczmoial9Q6iccdoQZJbicgxwdRjvppLP44Q/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+    第六步，块级作用域中的块依次出栈。当 look 函数执行完成后，look 执行上下文从调用栈中出栈。最终调用栈只剩下了全局执行上下文。
+
+    本文结合执行上下文分析了变量提升与块级作用域的实现，**变量提升其实就是在编译阶段把 var 声明的变量注入到变量环境中，而块级作用域的实现其实是通过不同的块来保存块中使用 let、const 声明的变量，通过栈的机制来处理不同的块**。执行上下文对理解 this，闭包有很大的作用。
