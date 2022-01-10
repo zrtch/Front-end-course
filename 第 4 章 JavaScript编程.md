@@ -535,3 +535,88 @@ look()
 书籍：《JavaScript 高级程序设计（第三版）》 ， 《JavaScript 指南 原书第七版》
 
 课程：李兵 【浏览器工作原理与实践】 [链接一](https://blog.poetries.top/browser-working-principle/) ， 周爱民 【JavaScript 核心原理解析】
+
+### 让 JS 文件代码相互独立
+
+在 JS 的世界，函数是一等公民，在没有 let,const 的时候，JS 中申明的变量只能是全局作用域或者函数作用域，根本没有块级作用域。这样很难避免变量**命名冲突**。比如在一个很大的项目中张三创建了一个 js 文件 block1.js，定义了一个变量 name：
+
+```javascript
+var name = "hello"
+```
+
+李四创建了一个 js 文件 block2.js，同样也定义了变量 name：
+
+```javascript
+var name = "world"
+```
+
+在 html 文件中引用，name 的值是什么呢？
+
+```html
+<body>
+    <script src="./block1.js"></script>
+    <script src="./block2.js"></script>
+    <script>
+        console.log(name)
+    </script>
+</body>
+```
+
+name 的值是“前端小课”，变量 name 在彼此不知情的情况下被修改了，这种开发体验非常糟糕。**程序开发的最佳体验是保证结果的唯一性，也就是说程序在同一条件下结果只有一个。**
+
+解决这个问题只要为张三和李四提供一个「独立的环境」，保证自己声明的变量在自己毫不知情的情况下不会被修改。可以使用「函数」来解决这个问题。
+
+```javascript
+//文件 block1.js:
+function zhangsan(){
+    var name = 'zhangsan',
+    console.log(name)
+}
+zhangsan()
+
+//文件 block2.js：
+function lisi(){
+    var name = 'lisi';
+    console.log(name)
+}
+lisi()
+```
+
+这样把两个文件中的变量都**隔离到一个独立的函数中**，但是如果函数名重复呢？又回到了前面提到的问题。还有一种更好的方式。
+
+```javascript
+//文件 block1.js:
+;(function () {
+    var name = "zhangsan"
+    console.log(name)
+})()
+
+// 文件 block2.js:
+;(function () {
+    var name = "lisi"
+    console.log(name)
+})()
+```
+
+JavaScript 可以省略分号，比如下面的代码是无法执行的：
+
+```javascript
+var name = "suyan"(function () {
+    console.log("call self")
+})()
+```
+
+所以通常写成：也就是所谓的常见的 JavaScript 代码隔离方法
+
+```javascript
+;(function () {
+    console.log("call self")
+})
+```
+
+```javascript
+void function () {
+    //void运算符就是为了保证返回值是undefined
+    console.log("call self")
+}
+```
