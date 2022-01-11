@@ -316,3 +316,61 @@ var name = 'hello'
 welcome() //hello
 
 // 上面这段代码会存在一个全局作用域，log 函数作用域和 welcome 函数作用域，JavaScript 代码执行的时候，会从当前作用域查找变量，如果未找到会到它的外层作用域中查找。log 函数的外层作用域是全局作用域，故 log 函数的打印值为全局作用域定义的变量。打印结果为“hello”。
+
+// 闭包
+function call () {
+    var name = 'suyan';
+    var age = 20;
+    console.log(name + ' age is ' + age);
+    return {
+
+        getAge: function () {
+            return age;
+        },
+        setAge: function (newValue) {
+            age = newValue;
+        }
+    };
+}
+const ageObj = call();
+console.log(ageObj.getAge()); // 20
+// 修改 age 的值为 30
+ageObj.setAge(30);
+console.log(ageObj.getAge()); // 30
+
+//闭包一大重要特征就是可以「保存函数执行环境中的变量」，使其延迟释放，比如下面的函数：
+function createCounter () {
+    let counter = 0;
+    const myFunction = function () {
+        counter = counter + 1;
+        return counter;
+    };
+    return myFunction;
+}
+// increment 是一个函数
+const increment = createCounter();
+const c1 = increment();
+const c2 = increment();
+const c3 = increment();
+console.log(c1, c2, c3); // 1,2,3
+
+//increment 这个函数使用了 createCounter 中的变量 counter，每次调用 increment 这个函数，变量 counter 一直保存在执行环境中，并不会被释放。再创建一个 increment2，这是 c11 的值为 1。可见 increment 和 increment2 使用的执行环境互不影响。
+const increment2 = createCounter();
+const c11 = increment2();
+console.log(c11); // 1
+
+//看一下 JavaScript 内置对象数组 这节课程中的一道关于闭包的面试题
+(function () {
+    var numbers = [];
+    for (var i = 0; i < 4; i++) {
+        numbers.push(function () {
+            return i;
+        });
+    }
+    var result = numbers.map(function (e) {
+        return e();
+    });
+    console.log(result); // 值是什么？
+})();
+
+//最终打印的值是 4、4、4、4。在函数中通过 var 声明的变量 i 属于函数作用域，当代码执行到第 8 行后， i 的值是 4。此时 numbers 中保存为 4 个函数，当这些函数被执行的时候会使用当前函数执行环境中的变量 i，此时值为 4，故最终 result 中的值都是 4。

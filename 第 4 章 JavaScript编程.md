@@ -620,3 +620,5 @@ void function () {
     console.log("call self")
 }
 ```
+
+### 带有执行环境的函数 - 闭包
