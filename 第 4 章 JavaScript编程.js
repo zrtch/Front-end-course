@@ -360,17 +360,68 @@ const c11 = increment2();
 console.log(c11); // 1
 
 //看一下 JavaScript 内置对象数组 这节课程中的一道关于闭包的面试题
-(function () {
-    var numbers = [];
+; (function () {
+    var numbers = []
     for (var i = 0; i < 4; i++) {
+        //假设这里是let声明的i,那就是[0,1,2,3]
         numbers.push(function () {
-            return i;
-        });
+            return i
+        })
     }
+    //在函数中通过 var 声明的变量 i 属于函数作用域
+    console.log(i) //  i 的值是 4
     var result = numbers.map(function (e) {
-        return e();
-    });
-    console.log(result); // 值是什么？
-})();
+        //numbers 中保存为 4 个函数，当这些函数被执行的时候会使用当前函数执行环境中的变量 i ,此时值为4。所以result都是4。
+        return e()
+    })
+    console.log(result) // [4,4,4,4]
+})()
 
-//最终打印的值是 4、4、4、4。在函数中通过 var 声明的变量 i 属于函数作用域，当代码执行到第 8 行后， i 的值是 4。此时 numbers 中保存为 4 个函数，当这些函数被执行的时候会使用当前函数执行环境中的变量 i，此时值为 4，故最终 result 中的值都是 4。
+// 调试 JavaScript 少不了这几个技巧
+//1. 自动断点
+function a () {
+    console.log("enter a")
+    b()
+}
+function b () {
+    console.log("enter b")
+    debugger
+    c()
+}
+function c () {
+    console.log("enter c")
+}
+a()
+
+//2.可以通过调试面板查看当前代码的调用堆栈，也可以通过 console.trace() 打印函数调用堆栈
+function a () {
+    console.log("enter a")
+    b()
+}
+function b () {
+    console.log("enter b")
+    c()
+}
+function c () {
+    console.log("enter c")
+    console.trace()
+}
+a()
+
+//以表格的方式打印对象  下面是一个对象，可以通过 console.table( obj ) 来打印这个对象。
+let pkg = {
+    name: "mini_tools",
+    version: "1.0.0",
+    description: "",
+    main: "index.js",
+    dependencies: {
+        jquery: "^1.12.4",
+    },
+    devDependencies: {},
+    scripts: {
+        test: 'echo "Error: no test specified" && exit 1',
+    },
+    author: "",
+    license: "ISC",
+}
+console.table(pkg)

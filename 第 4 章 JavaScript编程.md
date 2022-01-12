@@ -622,3 +622,169 @@ void function () {
 ```
 
 ### 带有执行环境的函数 - 闭包
+
+「闭包的出现能给编程带来哪些便捷呢？」，这是我们学习闭包首先需要面对的问题，也就是说闭包出现的背景是什么。
+
+```javascript
+//函数是无状态的，比如下面的函数：
+function call() {
+    var name = "suyan"
+    var age = 20
+    console.log(name + " age is " + age)
+}
+call()
+```
+
+当 call 函数执行完后 name 和 age 占用的内存空间将会被释放，在函数外部无法访问变量 name 和 age 。如果想要在函数 call 外访问变量 age，且函数执行完后保留 age 的值，咋么办？想要解决这个问题，可以使用闭包（colsure）
+
+```javascript
+function call() {
+    var name = "hello"
+    var age = 20
+    console.log(name + "age is " + age)
+    return {
+        getAge: function () {
+            return age
+        },
+        setAge: function (newValue) {
+            age = newValue
+        },
+    }
+}
+const ageObj = call()
+console.log(ageObj.getAge()) //20
+//修改 age 的值为30
+ageObj.setAge(30)
+console.log(ageObj.getAge()) // 30
+```
+
+通过 Chrome 调试工具可以查看 call 这个函数捕获的闭包中的变量：
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZeGGUkm4ZhlRcFKiaMRic8PWoCF6tLaENPs3aI9qpUwNwWkEiciaIQrHpibgbk308G9PQlPOo47ibIbWGQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZeGGUkm4ZhlRcFKiaMRic8PWwvRKVQDZLKjG3MBhaIUaXG9mtfWQhxb2UVvVibRE8qdccUrsW749Bxw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+**闭包一大重要特征就是可以「保存函数执行环境中的变量」，使其延迟释放。**
+
+```javascript
+function createCounter() {
+    let counter = 0
+    const myFunction = function () {
+        counter = counter + 1
+        return counter
+    }
+    return myFunction
+}
+// increment 是一个函数
+const increment = createCounter()
+const c1 = increment()
+const c2 = increment()
+const c3 = increment()
+console.log(c1, c2, c3) // 1 2 3
+```
+
+increment 这个函数使用了 createCounter 中的变量 counter，每次调用 increment 这个函数，**变量 counter 一直保存在执行环境中，并不会被释放**。再创建一个 increment2，这是 c11 的值为 1。可见 increment 和 increment2 使用的执行环境互不影响。
+
+```javascript
+const increment2 = createCounter()
+const c11 = increment2()
+console.log(c11) // 1
+```
+
+**闭包使得一个函数可以访问另一个函数作用域中的变量。** 一道关于闭包的面试题：
+
+```javascript
+;(function () {
+    var numbers = []
+    for (var i = 0; i < 4; i++) {
+        //假设这里是let声明的i,那就是[0,1,2,3]
+        numbers.push(function () {
+            return i
+        })
+    }
+    //在函数中通过 var 声明的变量 i 属于函数作用域
+    console.log(i) //  i 的值是 4
+    var result = numbers.map(function (e) {
+        //numbers 中保存为 4 个函数，当这些函数被执行的时候会使用当前函数执行环境中的变量 i ,此时值为4。所以result都是4。
+        return e()
+    })
+    console.log(result) // [4,4,4,4]
+})()
+```
+
+最终打印的值是 4、4、4、4。在函数中通过 var 声明的变量 i 属于函数作用域，当代码执行到第 8 行后， i 的值是 4。此时 numbers 中保存为 4 个函数，当这些函数被执行的时候会使用当前函数执行环境中的变量 i，此时值为 4，故最终 result 中的值都是 4。
+
+**总之，闭包可以延长变量的释放，你可以把闭包看做是带有执行环境的函数。**
+
+### 调试 JavaScript 少不了这几个技巧
+
+-   自动断点
+
+    有时候在执行 JavaScript 代码的时候，可能来不及设置断点，代码就被执行了，其实可以通过在代码中写上 debugger（代码中第 8 行），让代码执行到 debugger 的位置自动暂停。
+
+```javascript
+function a() {
+    console.log("enter a")
+    b()
+}
+function b() {
+    console.log("enter b")
+    debugger
+    c()
+}
+function c() {
+    console.log("enter c")
+}
+a()
+```
+
+-   手动断点
+
+    断点是程序员调试代码时非常好用的利器，通过断点调试可以看到当前执行环境中各个变量的值，以及调用堆栈，通过单步执行来查看各个步骤下代码的运行状态。如图所示（Chrome 调试面板 -> sources -> 点击代码行号即可添加断点）：
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZeGGUkm4ZhlRcFKiaMRic8PWdtSIKsk0Z5JJtyAqtQZjicWticuP6ATfvdrTvvIbUrX8KoCrXVNNVpwQ/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+-   打印调用堆栈
+
+    可以通过调试面板查看当前代码的调用堆栈，也可以通过 console.trace() 打印函数调用堆栈
+
+```javascript
+function a() {
+    console.log("enter a")
+    b()
+}
+function b() {
+    console.log("enter b")
+    c()
+}
+function c() {
+    console.log("enter c")
+    console.trace()
+}
+a()
+```
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZeGGUkm4ZhlRcFKiaMRic8PWtSdHoe5Lg2dWLyu9mmcZdleGsCyww1t6ibapupxKP67fHoCvw7owqng/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+-   以表格的方式打印对象
+
+    下面是一个对象，可以通过 console.table( obj ) 来打印这个对象。
+
+```javascript
+let pkg = {
+    name: "mini_tools",
+    version: "1.0.0",
+    description: "",
+    main: "index.js",
+    dependencies: {
+        jquery: "^1.12.4",
+    },
+    devDependencies: {},
+    scripts: {
+        test: 'echo "Error: no test specified" && exit 1',
+    },
+    author: "",
+    license: "ISC",
+}
+console.table(pkg)
+```
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZeGGUkm4ZhlRcFKiaMRic8PWM7rVJTLWsWDOKJqpsEcZsXgBStQYqr0PKk8GfibEzpsiaOe4tGXS0krA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
