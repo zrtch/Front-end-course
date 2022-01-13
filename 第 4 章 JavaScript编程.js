@@ -425,3 +425,77 @@ let pkg = {
     license: "ISC",
 }
 console.table(pkg)
+
+//连接你、我、他 —— this
+let from = 'wuhan';
+var obj = {
+    from: "beijing",
+    logFrom: function () {
+        console.log(from);
+    }
+}
+let logFrom = obj.logFrom;
+logFrom() //wuhan
+obj.logFrom() //wuhan
+
+//this 始终代表一个对象
+let from = "wuhan";
+var obj = {
+    from: "beijing",
+    logFrom: function () {
+        console.log(this.from); //换成this.from 其实 this就是被动态绑定到执行上下文中的一个属性
+    }
+}
+let logFrom = obj.logFrom;
+logFrom() //undefined
+obj.logFrom() // beijing
+
+//下面的代码两个this并不一样 ，内部函数并不会继承外部函数的 this。
+let lefex = {
+    name: 'suyan',
+    age: 0,
+    addAge: function () {
+        console.log('outer this = ', this); //{ name: 'suyan', age: 0, addAge: [Function: addAge] }
+        this.age += 2;
+        setTimeout(function () {
+            console.log('inner this = ', this); // window {parent:window}
+        }, 100)
+    }
+}
+lefex.addAge()
+
+// 解决方法一 就有了 let that = this 这样丑陋的代码。 
+let lefex = {
+    name: 'suyan',
+    age: 0,
+    addAge: function () {
+        console.log('outer this = ', this); //{ name: 'suyan', age: 0, addAge: [Function: addAge] }
+        this.age += 2;
+        let that = this;
+        setTimeout(function () {
+            console.log('inner this = ', that); // inner this =  { name: 'suyan', age: 2, addAge: [Function: addAge] }
+        }, 100)
+    }
+}
+lefex.addAge()
+
+//解决方法2 当然也可以用箭头函数
+let lefex = {
+    name: 'suyan',
+    age: 0,
+    addAge: function () {
+        console.log('outer this = ', this); //{ name: 'suyan', age: 0, addAge: [Function: addAge] }
+        this.age += 2;
+        setTimeout(() => {
+            console.log('inner this = ', this); // inner this =  { name: 'suyan', age: 2, addAge: [Function: addAge] }
+        }, 100)
+    }
+}
+lefex.addAge()
+
+//构造函数也使用了 this。this 指向就是当前创建的对象，下面代码中 this 指的是 suyan。
+function Person (name) {
+    this.name = name;
+    console.log(this); //Person { name: 'suyan' }
+}
+let suyan = new Person('suyan')

@@ -788,3 +788,111 @@ console.table(pkg)
 ```
 
 ![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZeGGUkm4ZhlRcFKiaMRic8PWM7rVJTLWsWDOKJqpsEcZsXgBStQYqr0PKk8GfibEzpsiaOe4tGXS0krA/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+### 连接你、我、他 —— this
+
+```javascript
+let from = "WuHan"
+
+var obj = {
+    from: "BeiJing",
+    logFrom: function () {
+        //使用的是全局from
+        console.log(from)
+    },
+}
+
+let logFrom = obj.logFrom
+logFrom() // wuhan
+obj.logFrom() //wuhan
+```
+
+打印结果都是 WuHan，这个例子迷惑的地方主要是下面这两个 from 的定义，第一个属于全局变量，第二个属于局部变量，logFrom 函数使用的是全局的 from 还是 obj 对象内部的 from。答案是「使用全局的 from」。
+
+**记住一句话「this 始终代表的是一个对象」。**
+
+当把上面的代码换成（ 把打印语句 console.log(from) 换成 console.log(this.from) ）：
+
+```javascript
+var obj = {
+    from: "BeiJing",
+    logFrom: function () {
+        console.log(this.from)
+    },
+}
+
+let logFrom = obj.logFrom
+logFrom() //执行结果是 undefined
+obj.logFrom() //执行结果是 BeiJing
+```
+
+**其实 this 就是被「动态」绑定到执行上下文中的一个属性**，也就是说当构建一个执行上下文的时候就会绑定一个 this 属性。主要有两种执行上下文：**全局执行上下文和函数执行上下文，那么就有两种 this，一种全局执行上下文中的 this，另一种是函数执行上下文中的 this。**
+
+1. 当在全局执行一个函数的时候（通过括号的方式执行），**this 指向全局对象**，在浏览器中，如果在严格模式下 this 为 undefined，**在非严格模式下，this 为 window。**比如 let logFrom = obj.logFrom，此时变量 logFrom 属于全局变量，通过全局调用一个函数，this 为 window（这里属于非严格模式），window 没有属性 from，故结果为 undefined。
+2. **当通过某个对象调用一个方法的时候，this 为当前的对象**。比如通过 obj 调用方法 logFrom，this 为 obj，所以打印结果为 BeiJing。
+
+使用第 1、2 这两条可以搞定大多数 this 的问题，但是有一种情况需要留意。比如下面的代码：
+
+```javascript
+let lefex = {
+    name: "suyan",
+    age: 0,
+    addAge: function () {
+        console.log("outer this = ", this)
+        this.age += 2
+        setTimeout(function () {
+            console.log("inner this = ", this)
+            this.age += 1
+        }, 100)
+    },
+}
+lefex.addAge()
+```
+
+![p](https://mmbiz.qpic.cn/mmbiz_png/dZjzL3cZLGZx6R1diap91WvViasJRpqgGANDoQYicoPWjr0KiaFGfXsnlcfqXQ9rAQa7O4D02YEFTvw2LyP01U88Uw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+结果发现两个 this 并不一样，**内部函数并不会继承外部函数的 this**。为了解决这个问题
+
+-   有了 **let that = this**这样丑陋的代码
+
+```javascript
+let lefex = {
+    name: 'suyan',
+    age: 0,
+    addAge: function () {
+        console.log('outer this = ', this); //{ name: 'suyan', age: 0, addAge: [Function: addAge] }
+        this.age += 2;
+        let that = this;
+        setTimeout(function () {
+            console.log('inner this = ', that); // inner this =  { name: 'suyan', age: 2, addAge: [Function: addAge] }
+        }, 100)
+    }
+}
+lefex.addAge()e()
+```
+
+-   也可以使用**箭头函数**解决这个问题
+
+```javascript
+let lefex = {
+    name: "suyan",
+    age: 0,
+    addAge: function () {
+        console.log("outer this = ", this) //{ name: 'suyan', age: 0, addAge: [Function: addAge] }
+        this.age += 2
+        setTimeout(() => {
+            console.log("inner this = ", this) // inner this =  { name: 'suyan', age: 2, addAge: [Function: addAge] }
+        }, 100)
+    },
+}
+lefex.addAge()
+```
+
+构造函数也使用了 this。this 指向就是当前创建的对象，下面代码中 this 指的是 suyan。
+
+```javascript
+function Person(name) {
+    this.name = name
+    console.log(this) //Person { name: 'suyan' }
+}
+let suyan = new Person("suyan")
+```
