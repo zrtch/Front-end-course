@@ -499,3 +499,67 @@ function Person (name) {
     console.log(this); //Person { name: 'suyan' }
 }
 let suyan = new Person('suyan')
+
+// && ，|| 超越了我的认知
+const person = {
+    name: 'one',
+    getName () {
+        return this.name
+    }
+}
+// function isOne () {
+//     return person.name === 'one' && person.getName
+// }
+
+function isOne () {
+    return !!(person.name === 'one' && person.getName)
+}
+
+let isTrue = isOne();
+console.log(isTrue); //结果是一个函数： [Function: getName]
+
+// 可以这么改造
+function isOne () {
+    return !!(person.name === 'one' && person.getName)  // 改造之后的值就是true
+}
+
+// 逻辑运算符如果使用的都是布尔值，则结果也是布尔值。然而，在 && 和 || 中， 当操作数是非布尔值的时候结果可能是非布尔值。
+// && 运算符从左到右进行计算，如果为真，继续往后走，直到遇到为 false 的，或者到了最后一个操作数。如果操作数是布尔值结果返回布尔值，如果操作数是非布尔值结果返回非布尔值。
+const a = 10;
+const b = -5;
+const c = 1;
+console.log(a && b); // -5
+console.log(a > 0 && b); // -5
+console.log(a < 0 && b); // false
+console.log(a && b < 0); // true
+console.log(a && b > 0); // false
+console.log(a > 0 && b < 0); // true
+console.log(a && b && c); // 1
+
+// || 运算符，只要遇到一个真值便停止计算，结果的规则和 && 运算符一致。
+console.log(a || b); // 10
+console.log(a > 0 || b); // true
+console.log(a < 0 || b); // -5
+console.log(a || b < 0); // 10
+console.log(a || b > 0); // 10
+console.log(a > 0 || b < 0); // true
+console.log(a || b || c); // 10
+
+//&& 的优先级大于 || 的优先级。
+true || false && false;      // returns true, because && is executed first
+(true || false) && false    // returns false, because operator precedence cannot apply
+
+// ！和!! 操作符返回的值永远是布尔值，返回值永远是布尔值：
+console.log(!!{}); // true
+console.log(!!true); // true
+console.log(!!10); // true
+console.log(!!-2); // true
+console.log(!!''); // false
+
+//假如有个 Label 显示用户的名称，显示规则为：默认值是前端小课，如果用户定义了别名就用别名，如果用户定义了真实的名字就用真实的名字，优先级为真实名字 > 昵称 > 默认名字。
+function oneFn () {
+    let defaultName = '默认';
+    let trueName = '真名';
+    let falsetName = '别名';
+    return trueName || falsetName || defaultName
+}
