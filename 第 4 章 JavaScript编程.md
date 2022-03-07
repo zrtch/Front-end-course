@@ -898,75 +898,165 @@ let suyan = new Person("suyan")
 ```
 
 ### && ，|| 超越了我的认知
+
 ```javascript
 const person = {
-    name: 'one',
-    getName () {
+    name: "one",
+    getName() {
         return this.name
-    }
+    },
 }
 // function isOne () {
 //     return person.name === 'one' && person.getName
 // }
 
-function isOne () {
-    return !!(person.name === 'one' && person.getName)
+function isOne() {
+    return !!(person.name === "one" && person.getName)
 }
 
-let isTrue = isOne();
-console.log(isTrue); //结果是一个函数： [Function: getName]
+let isTrue = isOne()
+console.log(isTrue) //结果是一个函数： [Function: getName]
 
 // 可以这么改造
-function isOne () {
-    return !!(person.name === 'one' && person.getName)  // 改造之后的值就是true
+function isOne() {
+    return !!(person.name === "one" && person.getName) // 改造之后的值就是true
 }
 ```
+
 逻辑运算符如果使用的都是布尔值，则结果也是布尔值。然而，在 && 和 || 中， 当操作数是非布尔值的时候结果可能是非布尔值。
 
-- && 运算符从左到右进行计算，如果为真，继续往后走，直到遇到为 false 的，或者到了最后一个操作数。如果操作数是布尔值结果返回布尔值，如果操作数是非布尔值结果返回非布尔值。
-```javascript
-const a = 10;
-const b = -5;
-const c = 1;
-console.log(a && b); // -5
-console.log(a > 0 && b); // -5
-console.log(a < 0 && b); // false
-console.log(a && b < 0); // true
-console.log(a && b > 0); // false
-console.log(a > 0 && b < 0); // true
-console.log(a && b && c); // 1
-```
-- || 运算符，只要遇到一个真值便停止计算，结果的规则和 && 运算符一致。
-```javascript
-console.log(a || b); // 10
-console.log(a > 0 || b); // true
-console.log(a < 0 || b); // -5
-console.log(a || b < 0); // 10
-console.log(a || b > 0); // 10
-console.log(a > 0 || b < 0); // true
-console.log(a || b || c); // 10
+-   && 运算符从左到右进行计算，如果为真，继续往后走，直到遇到为 false 的，或者到了最后一个操作数。如果操作数是布尔值结果返回布尔值，如果操作数是非布尔值结果返回非布尔值。
 
+```javascript
+const a = 10
+const b = -5
+const c = 1
+console.log(a && b) // -5
+console.log(a > 0 && b) // -5
+console.log(a < 0 && b) // false
+console.log(a && b < 0) // true
+console.log(a && b > 0) // false
+console.log(a > 0 && b < 0) // true
+console.log(a && b && c) // 1
 ```
+
+-   || 运算符，只要遇到一个真值便停止计算，结果的规则和 && 运算符一致。
+
+```javascript
+console.log(a || b) // 10
+console.log(a > 0 || b) // true
+console.log(a < 0 || b) // -5
+console.log(a || b < 0) // 10
+console.log(a || b > 0) // 10
+console.log(a > 0 || b < 0) // true
+console.log(a || b || c) // 10
+```
+
 1. 可以被转换成 false 的值：null、NaN、0、空字符串 "", '',``、undefined。
 2. && 的优先级大于 || 的优先级。
+
 ```javascript
-true || false && false;      // returns true, because && is executed first
-(true || false) && false    // returns false, because operator precedence cannot apply
+true || (false && false) // returns true, because && is executed first
+;(true || false) && false // returns false, because operator precedence cannot apply
 ```
+
 3. ！和!! 操作符返回的值永远是布尔值，返回值永远是布尔值：
+
 ```javascript
-console.log(!!{}); // true
-console.log(!!true); // true
-console.log(!!10); // true
-console.log(!!-2); // true
-console.log(!!''); // false
+console.log(!!{}) // true
+console.log(!!true) // true
+console.log(!!10) // true
+console.log(!!-2) // true
+console.log(!!"") // false
 ```
+
 ```javascript
 //假如有个 Label 显示用户的名称，显示规则为：默认值是前端小课，如果用户定义了别名就用别名，如果用户定义了真实的名字就用真实的名字，优先级为真实名字 > 昵称 > 默认名字。
-function oneFn () {
-    let defaultName = '默认';
-    let trueName = '真名';
-    let falsetName = '别名';
+function oneFn() {
+    let defaultName = "默认"
+    let trueName = "真名"
+    let falsetName = "别名"
     return trueName || falsetName || defaultName
 }
+```
+
+### JS 中如何实现策略模式
+
+概念：策略模式的定义是:定义一系列的算法，把它们一个个封装起来，并且使它们可以**相互替换。**
+
+策略模式指的是定义一系列的算法，把它们一个个封装起来。将不变的部分和变化的部分隔开是每个设计模式的主题，策略模式也不例外，**策略模式的目的就是将算法的使用与算法的实现分离开来。**
+
+一个基于策略模式的程序至少由两部分组成。第一个部分是一组**策略类**，策略类封装了具体 的算法，并负责具体的计算过程。 第二个部分是**环境类 Context**，Context 接受客户的请求，随后 把请求委托给某一个策略类。要做到这点，说明 Context 中要维持对某个策略对象的引用。
+
+策略模式的实现并不复杂，关键是如何从策略模式的实现背后，找到封装变化、委托和多态性这些思想的价值。
+
+优点：
+
+-   策略模式利用组合、委托和多态等技术和思想，可以有效地避免多重条件选择语句。
+-   策略模式提供了对开放—封闭原则的完美支持，将算法封装在独立的 strategy 中，使得它们易于切换，易于理解，易于扩展。
+-   策略模式中的算法也可以复用在系统的其他地方，从而避免许多重复的复制粘贴工作。
+-   在策略模式中利用组合和委托来让 Context 拥有执行算法的能力，这也是继承的一种更轻便的替代方案。
+
+JavaScript 版本的策略模式
+
+```javascript
+var strategies = {
+    S: function (salary) {
+        return salary * 4
+    },
+    A: function (salary) {
+        return salary * 3
+    },
+    B: function (salary) {
+        return salary * 2
+    },
+}
+var calculaBonus = function (level, salary) {
+    return strategies[level](salary)
+}
+console.log(calculaBonus("S", 100)) // 200
+console.log(calculaBonus("A", 100)) // 200
+console.log(calculaBonus("B", 100)) // 200
+```
+
+```javascript
+// ES6类实现
+var performanceS = function () {}
+performanceS.prototype.calculate = function (salary) {
+    return salary * 4
+}
+var performanceA = function () {}
+performanceA.prototype.calculate = function (salary) {
+    return salary * 3
+}
+var performanceB = function () {}
+performanceB.prototype.calculate = function (salary) {
+    return salary * 2
+}
+
+//接下来定义奖金类Bonus：
+class Bonus {
+    constructor() {
+        this.salary = null // 原始工资
+        this.strategy = null // 绩效等级对应的策略对象
+    }
+    setSalary(salary) {
+        this.salary = salary // 设置员工的原始工资
+    }
+    setStrategy(strategy) {
+        this.strategy = strategy // 设置员工绩效等级对应的策略对象
+    }
+    getBonus() {
+        // 取得奖金数额
+        return this.strategy.calculate(this.salary) // 把计算奖金的操作委托给对应的策略对象
+    }
+}
+
+var bonus = new Bonus()
+bonus.setSalary(10000)
+
+bonus.setStrategy(new performanceS()) // 设置策略对象
+console.log(bonus.getBonus()) // 输出：40000
+bonus.setStrategy(new performanceA()) // 设置策略对象
+console.log(bonus.getBonus()) // 输出：30000
 ```

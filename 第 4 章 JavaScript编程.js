@@ -563,3 +563,61 @@ function oneFn () {
     let falsetName = '别名';
     return trueName || falsetName || defaultName
 }
+
+// JS 中如何实现策略模式
+var strategies = {
+    "S": function(salary){
+        return salary * 4
+    },
+    "A": function(salary){
+        return salary * 3
+    },
+    "B": function(salary){
+        return salary * 2
+    },
+}
+var calculaBonus = function(level,salary){
+    return strategies[ level ](salary)
+}
+console.log(calculaBonus('S',100)); // 200
+console.log(calculaBonus('A',100)); // 200
+console.log(calculaBonus('B',100)); // 200
+
+// ES6类实现
+var performanceS = function () {};
+performanceS.prototype.calculate = function (salary) {
+  return salary * 4;
+};
+var performanceA = function () {};
+performanceA.prototype.calculate = function (salary) {
+  return salary * 3;
+};
+var performanceB = function () {};
+performanceB.prototype.calculate = function (salary) {
+  return salary * 2;
+};
+
+//接下来定义奖金类Bonus：
+class Bonus {
+  constructor() {
+    this.salary = null; // 原始工资
+  this.strategy = null; // 绩效等级对应的策略对象
+  }
+  setSalary(salary) {
+    this.salary = salary; // 设置员工的原始工资
+  }
+  setStrategy(strategy) {
+    this.strategy = strategy; // 设置员工绩效等级对应的策略对象
+  }
+  getBonus() { // 取得奖金数额
+    return this.strategy.calculate(this.salary); // 把计算奖金的操作委托给对应的策略对象
+  }
+}
+
+var bonus = new Bonus();
+bonus.setSalary(10000);
+
+bonus.setStrategy(new performanceS()); // 设置策略对象
+console.log(bonus.getBonus()); // 输出：40000
+bonus.setStrategy(new performanceA()); // 设置策略对象
+console.log(bonus.getBonus()); // 输出：30000
