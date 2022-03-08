@@ -1060,3 +1060,44 @@ console.log(bonus.getBonus()) // 输出：40000
 bonus.setStrategy(new performanceA()) // 设置策略对象
 console.log(bonus.getBonus()) // 输出：30000
 ```
+
+### 对象的 key 原来可以使用变量
+
+实际场景：比如有 3 个 VIP 会员，每一种会员有与之对应的一个会员 id，10 表示年会员，11 表示 3 个月会员，12 表示 6 个月会员。由于代码中多处使用到了会员 id，如果在代码使用数字做不同会员的业务处理，这样做有几个弊端：
+
+1、数字不太直观，比如看到 10 你不会立马想到是年会员的 id，如果使用变量名 yearVipId 可直接知道是年会员 id；
+
+2、一旦会员 id 修改后，很多业务逻辑多需要查看，确保万无一失。
+
+```javascript
+// 假如我们定义了以下常量，代码中凡是涉及到会员 ID 的时候都使用变量名来表示：
+// 年会员
+const YEAR_VIP_ID = 10
+// 3 个月会员
+const THREE_MONTH_VIP_ID = 11
+// 6 个月会员
+const SIX_MONTH_VIP_ID = 12
+
+// 有一个业务需求需要根据不同的商品 ID，给用户提示不同的描述信息，为了避免写太多的 if 判断，我设计了一个对象：
+const VIP_ID_OBJ = {
+    YEAR_VIP_ID: "买1年送2个月",
+    THREE_MONTH_VIP_ID: "买3个月送1个月",
+    SIX_MONTH_VIP_ID: "买半年送1瓶茅台",
+}
+// 这样可以通过会员 ID 拿到对应的描述：
+var vipDes = VIP_ID_OBJ[YEAR_VIP_ID]
+console.log(vipDes) // undefined
+//但是结果取到的 vipDes 是 undefined，这让我很诧异，仔细看了下代码，原来是 key 使用了 YEAR_VIP_ID、THREE_MONTH_VIP_ID、SIX_MONTH_VIP_ID ，它们会被转换成字符串，而不是变量的值。
+```
+
+其实 key 可以是一个变量或者一个表达式，通过 [ 变量或表达式 ] 包起来。
+
+```javascript
+const VIP_ID_OBJ = {
+    ["YEAR_VIP_ID"]: "买1年送2个月",
+    ["THREE_MONTH_VIP_ID"]: "买3个月送1个月",
+    ["SIX_MONTH_VIP_ID"]: "买半年送1瓶茅台",
+}
+var vipDes = VIP_ID_OBJ["YEAR_VIP_ID"]
+console.log(vipDes) // 买1年送2个月
+```

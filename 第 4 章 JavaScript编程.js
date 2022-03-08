@@ -621,3 +621,12 @@ bonus.setStrategy(new performanceS()); // 设置策略对象
 console.log(bonus.getBonus()); // 输出：40000
 bonus.setStrategy(new performanceA()); // 设置策略对象
 console.log(bonus.getBonus()); // 输出：30000
+
+// 对象的 key 原来可以使用变量
+const VIP_ID_OBJ = {
+    ["YEAR_VIP_ID"]: '买1年送2个月',
+    ["THREE_MONTH_VIP_ID"]: '买3个月送1个月',
+    ["SIX_MONTH_VIP_ID"]: '买半年送1瓶茅台'
+}
+var vipDes = VIP_ID_OBJ["YEAR_VIP_ID"];
+console.log(vipDes); // 买1年送2个月
