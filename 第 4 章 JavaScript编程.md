@@ -1101,3 +1101,160 @@ const VIP_ID_OBJ = {
 var vipDes = VIP_ID_OBJ["YEAR_VIP_ID"]
 console.log(vipDes) // 买1年送2个月
 ```
+
+### 2 道 this 面试题
+
+```javascript
+// 1. 通过 tempSuyanF() 和 obj.suyanF() 调用函数 suyan，最终 a 的结果是啥？
+{
+    function suyan() {
+        console.log(this.a) // ?
+    }
+    var obj = {
+        a: 2,
+        suyanF: suyan,
+    }
+    var tempSuyanF = obj.suyanF
+    var a = "global a"
+
+    // 第 1.1 题：suyan 函数中 a 的值是啥
+    tempSuyanF()
+    // 第 1.2 题：suyan 函数中 a 的值是啥
+    obj.suyanF()
+}
+```
+
+解析：var tempSuyanF = obj.suyanF; 这是一次赋值操作，把 obj 中的函数 suyanF 赋值给 tempSuyanF，原先绑定到 obj 中的 this 会丢失。当调用 tempSuyanF 函数时，**this 绑定到了 window 对象上**（因为为非严格模式），通过 var 声明的变量 a 会被添加到 window 上。故输出结果为 global a。当直接调用 obj.suyanF() 时，此时 this 绑定到了 obj 这个对象上，obj 中定义了变量 a，故结果为 2。
+
+```javascript
+//通过 doSuyna(obj.suyanF)  和 obj.suyanF() 调用函数 suyan，最终 a 的结果是啥？
+{
+    function suyan() {
+        console.log(this.a) // ?
+    }
+    function doSuyna(fn) {
+        fn()
+    }
+    var obj = {
+        a: 2,
+        suyanF: suyan,
+    }
+    var a = "global a"
+    // 第 2.1 题：suyan 函数中 a 的值是啥
+    doSuyna(obj.suyanF)
+    // 第 2.2 题：suyan 函数中 a 的值是啥
+    obj.suyanF()
+}
+```
+
+解析：第 1 题其实一样，主要考察函数在参数传递的过程中**有一次隐式的变量赋值**，执行 doSuyna(obj.suyanF); 时，相当于 fn = obj.suyanF，此时 this 也丢失，故结果是 global a，obj.suyanF(); 和第 1 题一样，结果也是 2。
+
+### 被我忽略的 6 个 JS 开发小技巧
+
+1.  typeof 误解
+
+    声明一个变量 var a，typeof a 常被误解是求变量 a 的类型，其实是求变量 a 中「当前值的类型」。如图所示，当 a 的值发生改变时，typeof a 的结果也在发生变化。
+
+```javascript
+var a
+console.log(typeof a) // undefined
+a = "hello"
+console.log(typeof a) // string
+a = 42
+console.log(typeof a) //number
+a = true
+console.log(typeof a) //boolean
+a = null
+console.log(typeof a) // object
+a = undefined
+console.log(typeof a) //undefined
+a = { b: "c" }
+console.log(typeof a) //object
+```
+
+2. 真假难辨
+
+    js 中的「假值」包含 ""、0、-0、NaN,、null、undefined、false，记住空字符串也是「假值」，而空数组 [] 和空对象 {} 却不是假值。通过下面代码可以验证一下：
+
+```javascript
+if (!"" && !0 && !-0 && !NaN && !null && !undefined && !false) {
+    console.log("我是假值")
+}
+if ({} && []) {
+    console.log("我是真值")
+}
+```
+
+3. == 与 ===
+
+    结果是 a == c，看到这个结果我难以置信。== 和 === 的区别在于，== 检查「值相等」，而 === 检查「值和类型」相等。但这么说并不精确。正确的说法是，== 检查的是允许类型转换的情况下值的相等性，而 === 检查不允许类型转换的情况下值的相等性；因此，=== 经常被称为“严格相等”。
+
+```javascript
+let a = ["one", "two"]
+let b = "one,two"
+if (a == b) {
+    console.log("a == b") //打印此行 == 检查的是允许类型转换的情况下值的相等性
+} else if (a === b) {
+    console.log("a === b")
+} else {
+    console.log("!=")
+}
+```
+
+4. 类型之间比较
+
+    结果打印的是”我该咋办“。原因是这样的， b 在 < 和 > 比较过程中，b 被转换成了无效数字 NaN，「规范设定 NaN 即不大于也不小于任何值」。== 比较结果为假是因为无论 42 == NaN 还是 "42" == "suyan" 都不可能为真。
+
+```javascript
+let a = 41
+let b = "suyan"
+if (a > b) {
+    console.log("a>b")
+} else if (a < b) {
+    console.log("a<b")
+} else if (a == b) {
+    console.log("a==b")
+} else {
+    console.log("我该咋办")
+}
+```
+
+5. 自己实现一个 isNaN 函数
+
+    这里利用了 NaN 值的一个特性，即 NaN 是整个语言中唯一和自身不相等的值。因此，NaN 是使得 x != x 为真的唯一值。
+
+```javascript
+if (!Number.isNaN) {
+    Number.isNaN = function isNaN(x) {
+        return x !== x
+    }
+}
+```
+
+6. IIFE
+
+    意为立即调用的函数表达式，也就是说，声明函数的同时立即调用这个函数。
+
+```javascript
+//不采用IIFE时的函数声明和函数调用：
+function foo() {
+    var a = 10
+    console.log(a)
+}
+foo()
+
+//IIFE形式的函数调用：
+;(function () {
+    var b = 9
+    console.log(b)
+})()
+```
+
+函数的声明和 IIFE 的区别在于，在函数的声明中，我们首先看到的是 function 关键字，而 IIFE 我们首先看到的是左边的（。也就是说，**使用一对（）将函数的声明括起来，使得 JS 编译器不再认为这是一个函数声明，而是一个 IIFE，即需要立刻执行声明的函数。**
+两者达到的目的是相同的，都是声明了一个函数 foo 并且随后调用函数 foo。
+
+#### 为什么需要 IIFE？
+
+如果只是为了立即执行一个函数，显然 IIFE 所带来的好处有限。实际上，IIFE 的出现是为了弥补 JS 在**scope 方面的缺陷**：JS 只有全局作用域（global scope）、函数作用域（function scope），从 ES6 开始才有块级作用域（block scope）。对比现在流行的其他面向对象的语言可以看出，JS 在访问控制这方面是多么的脆弱！那么如何实现作用域的隔离呢？在 JS 中，只有 function，只有 function，**只有 function 才能实现作用域隔离**，因此如果要将一段代码中的变量、函数等的定义隔离出来，只能将这段代码封装到一个函数中。
+
+在我们通常的理解中，将代码封装到函数中的目的是为了复用。在 JS 中，当然声明函数的目的在大多数情况下也是为了复用，但是 JS 迫于作用域控制手段的贫乏，我们也经常看到只使用一次的函数：这通常的目的是为了隔离作用域了！既然只使用一次，那么立即执行好了！既然只使用一次，函数的名字也省掉了！这就是 IIFE 的由来。

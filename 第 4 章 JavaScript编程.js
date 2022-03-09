@@ -630,3 +630,109 @@ const VIP_ID_OBJ = {
 }
 var vipDes = VIP_ID_OBJ["YEAR_VIP_ID"];
 console.log(vipDes); // 买1年送2个月
+
+//2 道 this面试题 
+// this实际上是在函数被调用是发生的绑定，它指向什么完全取决于函数在哪里被调用。
+{
+    function suyan() {
+        console.log(this.a);
+    }
+    var obj = {
+        a: 2,
+        suyanF: suyan
+    };
+    var tempSuyanF = obj.suyanF; //  这是一次赋值操作，把 obj 中的函数 suyanF 赋值给 tempSuyanF，
+    var a = 'global a';
+
+    tempSuyanF(); // global a  原先绑定到 obj 中的 this 会丢失。当调用 tempSuyanF 函数时，this 绑定到了 window 对象上（因为为非严格模式），通过 var 声明的变量 a 会被添加到 window 上。
+    obj.suyanF(); // 2：当直接调用 obj.suyanF() 时，此时 this 绑定到了 obj 这个对象上，obj 中定义了变量 a，故结果为 2。
+}
+
+// 通过 doSuyna(obj.suyanF)  和 obj.suyanF() 调用函数 suyan，最终 a 的结果是啥？
+{
+    function suyan(){
+        console.log(this.a);
+    }
+    function doSuyan(fn){
+        fn()
+    }
+    var obj = {
+        a:2,
+        suyanF:suyan
+    }
+    var a = 'global a'
+    // 第 2.1 题：suyan 函数中 a 的值是啥
+    doSuyan(obj.suyanF) // global a 函数在参数传递的过程中有一次隐式的变量赋值，执行 doSuyna(obj.suyanF); 时，相当于 fn = obj.suyanF，此时 this 也丢失，故结果是 global a
+    // 第 2.2 题：suyan 函数中 a 的值是啥
+    obj.suyanF() // 2
+}
+
+
+//被我忽略的 6 个 JS 开发小技巧
+// 1.typeof：声明一个变量 var a，typeof a 常被误解是求变量 a 的类型，其实是求变量 a 中「当前值的类型」。如图所示，当 a 的值发生改变时，typeof a 的结果也在发生变化。
+var a;
+console.log(typeof a); // undefined
+a = 'hello'
+console.log(typeof a); // string
+a = 42
+console.log(typeof a); //number
+a = true 
+console.log(typeof a); //boolean
+a = null;
+console.log(typeof a);// object
+a = undefined;
+console.log(typeof a); //undefined
+a = {b:'c'}
+console.log(typeof a); //object
+
+//2. 真假难辨：js 中的「假值」包含 ""、0、-0、NaN,、null、undefined、false，记住空字符串也是「假值」，而空数组 [] 和空对象 {} 却不是假值。通过下面代码可以验证一下：
+if(!"" && !0 && !-0 && !NaN && !null && !undefined && !false ){
+    console.log('我是假值');
+}
+if({} && []){
+    console.log('我是真值');
+}
+
+// ==与===
+let a = ['one','two']
+let b = 'one,two'
+if(a == b){
+    console.log('a == b'); //打印此行 == 检查的是允许类型转换的情况下值的相等性
+}else if(a===b){
+    console.log('a === b');
+}
+else{
+    console.log('!=');
+}
+
+// 类型之间比较
+let a = 41;
+let b = 'one';
+if(a > b){
+    console.log('a>b');
+}else if(a<b){
+    console.log('a<b');
+}else if(a ==b){
+    console.log('a==b');
+}else{
+    console.log('haha'); //打印此行 b 在 < 和 > 比较过程中，b 被转换成了无效数字 NaN，「规范设定 NaN 即不大于也不小于任何值」。== 比较结果为假是因为无论 42 == NaN 还是 "42" == "suyan" 都不可能为真。
+}
+
+//自己实现一个 isNaN 函数
+if(!Number.isNaN){
+    Number.isNaN = function isNaN(x){
+        return x !== x;
+    }
+}
+
+//不采用IIFE时的函数声明和函数调用：
+function foo() {
+    var a = 10
+    console.log(a)
+}
+foo()
+//IIFE
+;(function foo(){
+    var b = 8;
+    console.log(b);
+})()
