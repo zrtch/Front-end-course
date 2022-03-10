@@ -1231,7 +1231,7 @@ if (!Number.isNaN) {
 }
 ```
 
-6. IIFE
+6. IIFE [JS 的 IIFE](https://www.cnblogs.com/yiven/p/8462666.html)
 
     意为立即调用的函数表达式，也就是说，声明函数的同时立即调用这个函数。
 
@@ -1258,3 +1258,81 @@ foo()
 如果只是为了立即执行一个函数，显然 IIFE 所带来的好处有限。实际上，IIFE 的出现是为了弥补 JS 在**scope 方面的缺陷**：JS 只有全局作用域（global scope）、函数作用域（function scope），从 ES6 开始才有块级作用域（block scope）。对比现在流行的其他面向对象的语言可以看出，JS 在访问控制这方面是多么的脆弱！那么如何实现作用域的隔离呢？在 JS 中，只有 function，只有 function，**只有 function 才能实现作用域隔离**，因此如果要将一段代码中的变量、函数等的定义隔离出来，只能将这段代码封装到一个函数中。
 
 在我们通常的理解中，将代码封装到函数中的目的是为了复用。在 JS 中，当然声明函数的目的在大多数情况下也是为了复用，但是 JS 迫于作用域控制手段的贫乏，我们也经常看到只使用一次的函数：这通常的目的是为了隔离作用域了！既然只使用一次，那么立即执行好了！既然只使用一次，函数的名字也省掉了！这就是 IIFE 的由来。
+
+### 闭包
+
+```javascript
+function makeAdder(x) {
+    let temp = x
+    function add(y) {
+        return y + temp
+    }
+    return add
+}
+let plusOne = makeAdder(1)
+let plusTwo = makeAdder(2)
+console.log(plusOne(2))
+console.log(plusOne(5))
+console.log(plusTwo(2))
+console.log(plusTwo(5))
+```
+
+解析：makeAdder 函数返回一个函数 add，add 引用了变量 temp。当执行 plusOne(2) 和 plusOne(5) 的时候，发现变量 temp 仍然能够被访问到。同理 plusTwo(2) 和 plusTwo(5) 也能够访问变量 temp。就好像 makeAdder 这个函数拥有记忆功能，可以记住执行时的参数 x。
+
+其实就是用到了闭包（colsure） 函数 add 可以访问函数外的变量 temp，能够访问的变量都有一个特征，这些变量在另外一个函数中，也就是说存在嵌套函数，内部函数可以访问外部函数词法环境内所有变量。
+
+```javascript
+function hello(who) {
+    let welcome = "hi:" + who + "欢迎"
+    let welcomeFun = function () {
+        console.log(welcome) // hi:kobe欢迎
+    }
+    welcomeFun()
+}
+hello("kobe")
+```
+
+解析：通过 Chrome 浏览器调试可以看出，内部函数 welcomeFun 访问了外部函数 hello 的变量 welcome，当函数 welcomeFun 执行的时候，会产生一个短暂性的闭包，因为 welcomeFun 函数在 hello 函数内部立即执行了，当 hello 函数调用结束后这个闭包就被释放了。
+
+> 闭包是当一个函数即使脱离了词法作用域，仍然能够访问它所在词法作用域。
+
+经典面试题
+
+```javascript
+for (var i = 0; i < 4; i++) {
+    let timer = function () {
+        console.log(i)
+    }
+    setTimeout(timer, i * 1000)
+}
+```
+
+解析：每隔 1 秒输出一个 4 var 定义的变量是函数作用域，或者全局作用域，此处只定义了一个 i，timer 函数中使用了 i 的引用，当 for 循环结束后，timer 会被调用，此时 i 为 4。
+
+假设想要变成 0，1，2，3
+
+1.  ES6 以后可以通过 let 声明块级作用域的变量。把 var 改成 let，在 for 循环中，每次声明一个独立的变量 i。
+
+```javascript
+for (let i = 0; i < 4; i++) {
+    let timer = function () {
+        console.log(i)
+    }
+    setTimeout(timer, i * 1000)
+}
+```
+
+2. 因为在自执行函数中使用的还是变量 i，改进如下
+
+```javascript
+for (var i = 0; i < 4; i++) {
+    ;(function (j) {
+        let timer = function () {
+            console.log(j)
+        }
+        setTimeout(timer, j * 1000)
+    })(i)
+}
+```
+
+[《你不知道的 JS》](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
