@@ -566,52 +566,52 @@ function oneFn () {
 
 // JS 中如何实现策略模式
 var strategies = {
-    "S": function(salary){
+    "S": function (salary) {
         return salary * 4
     },
-    "A": function(salary){
+    "A": function (salary) {
         return salary * 3
     },
-    "B": function(salary){
+    "B": function (salary) {
         return salary * 2
     },
 }
-var calculaBonus = function(level,salary){
-    return strategies[ level ](salary)
+var calculaBonus = function (level, salary) {
+    return strategies[level](salary)
 }
-console.log(calculaBonus('S',100)); // 200
-console.log(calculaBonus('A',100)); // 200
-console.log(calculaBonus('B',100)); // 200
+console.log(calculaBonus('S', 100)); // 200
+console.log(calculaBonus('A', 100)); // 200
+console.log(calculaBonus('B', 100)); // 200
 
 // ES6类实现
-var performanceS = function () {};
+var performanceS = function () { };
 performanceS.prototype.calculate = function (salary) {
-  return salary * 4;
+    return salary * 4;
 };
-var performanceA = function () {};
+var performanceA = function () { };
 performanceA.prototype.calculate = function (salary) {
-  return salary * 3;
+    return salary * 3;
 };
-var performanceB = function () {};
+var performanceB = function () { };
 performanceB.prototype.calculate = function (salary) {
-  return salary * 2;
+    return salary * 2;
 };
 
 //接下来定义奖金类Bonus：
 class Bonus {
-  constructor() {
-    this.salary = null; // 原始工资
-  this.strategy = null; // 绩效等级对应的策略对象
-  }
-  setSalary(salary) {
-    this.salary = salary; // 设置员工的原始工资
-  }
-  setStrategy(strategy) {
-    this.strategy = strategy; // 设置员工绩效等级对应的策略对象
-  }
-  getBonus() { // 取得奖金数额
-    return this.strategy.calculate(this.salary); // 把计算奖金的操作委托给对应的策略对象
-  }
+    constructor() {
+        this.salary = null; // 原始工资
+        this.strategy = null; // 绩效等级对应的策略对象
+    }
+    setSalary (salary) {
+        this.salary = salary; // 设置员工的原始工资
+    }
+    setStrategy (strategy) {
+        this.strategy = strategy; // 设置员工绩效等级对应的策略对象
+    }
+    getBonus () { // 取得奖金数额
+        return this.strategy.calculate(this.salary); // 把计算奖金的操作委托给对应的策略对象
+    }
 }
 
 var bonus = new Bonus();
@@ -634,7 +634,7 @@ console.log(vipDes); // 买1年送2个月
 //2 道 this面试题 
 // this实际上是在函数被调用是发生的绑定，它指向什么完全取决于函数在哪里被调用。
 {
-    function suyan() {
+    function suyan () {
         console.log(this.a);
     }
     var obj = {
@@ -650,15 +650,15 @@ console.log(vipDes); // 买1年送2个月
 
 // 通过 doSuyna(obj.suyanF)  和 obj.suyanF() 调用函数 suyan，最终 a 的结果是啥？
 {
-    function suyan(){
+    function suyan () {
         console.log(this.a);
     }
-    function doSuyan(fn){
+    function doSuyan (fn) {
         fn()
     }
     var obj = {
-        a:2,
-        suyanF:suyan
+        a: 2,
+        suyanF: suyan
     }
     var a = 'global a'
     // 第 2.1 题：suyan 函数中 a 的值是啥
@@ -676,74 +676,74 @@ a = 'hello'
 console.log(typeof a); // string
 a = 42
 console.log(typeof a); //number
-a = true 
+a = true
 console.log(typeof a); //boolean
 a = null;
 console.log(typeof a);// object
 a = undefined;
 console.log(typeof a); //undefined
-a = {b:'c'}
+a = { b: 'c' }
 console.log(typeof a); //object
 
 //2. 真假难辨：js 中的「假值」包含 ""、0、-0、NaN,、null、undefined、false，记住空字符串也是「假值」，而空数组 [] 和空对象 {} 却不是假值。通过下面代码可以验证一下：
-if(!"" && !0 && !-0 && !NaN && !null && !undefined && !false ){
+if (!"" && !0 && !-0 && !NaN && !null && !undefined && !false) {
     console.log('我是假值');
 }
-if({} && []){
+if ({} && []) {
     console.log('我是真值');
 }
 
 // ==与===
-let a = ['one','two']
+let a = ['one', 'two']
 let b = 'one,two'
-if(a == b){
+if (a == b) {
     console.log('a == b'); //打印此行 == 检查的是允许类型转换的情况下值的相等性
-}else if(a===b){
+} else if (a === b) {
     console.log('a === b');
 }
-else{
+else {
     console.log('!=');
 }
 
 // 类型之间比较
 let a = 41;
 let b = 'one';
-if(a > b){
+if (a > b) {
     console.log('a>b');
-}else if(a<b){
+} else if (a < b) {
     console.log('a<b');
-}else if(a ==b){
+} else if (a == b) {
     console.log('a==b');
-}else{
+} else {
     console.log('haha'); //打印此行 b 在 < 和 > 比较过程中，b 被转换成了无效数字 NaN，「规范设定 NaN 即不大于也不小于任何值」。== 比较结果为假是因为无论 42 == NaN 还是 "42" == "suyan" 都不可能为真。
 }
 
 //自己实现一个 isNaN 函数
-if(!Number.isNaN){
-    Number.isNaN = function isNaN(x){
+if (!Number.isNaN) {
+    Number.isNaN = function isNaN (x) {
         return x !== x;
     }
 }
 
 //不采用IIFE时的函数声明和函数调用：
-function foo() {
+function foo () {
     var a = 10
     console.log(a)
 }
 foo()
-//IIFE
-;(function foo(){
-    var b = 8;
-    console.log(b);
-})()
+    //IIFE
+    ; (function foo () {
+        var b = 8;
+        console.log(b);
+    })()
 
 //闭包
-function makeAdder(x){
+function makeAdder (x) {
     let temp = x;
-    function add(y){
+    function add (y) {
         return y + temp;
     }
-    return add 
+    return add
 }
 let plusOne = makeAdder(1)
 let plusTwo = makeAdder(2)
@@ -755,9 +755,9 @@ console.log(plusTwo(5));
 // 其实就是用到了闭包（colsure） 函数 add 可以访问函数外的变量 temp，能够访问的变量都有一个特征，这些变量在另外一个函数中，也就是说存在嵌套函数，内部函数可以访问外部函数词法环境内所有变量。
 
 //通过 Chrome 浏览器调试可以看出，内部函数 welcomeFun 访问了外部函数 hello 的变量 welcome，当函数 welcomeFun 执行的时候，会产生一个短暂性的闭包，因为 welcomeFun 函数在 hello 函数内部立即执行了，当 hello 函数调用结束后这个闭包就被释放了。
-function hello(who){
+function hello (who) {
     let welcome = 'hi:' + who + '欢迎';
-    let welcomeFun = function(){
+    let welcomeFun = function () {
         console.log(welcome);
     }
     welcomeFun()
@@ -767,27 +767,47 @@ hello('kobe')
 //闭包是当一个函数即使脱离了词法作用域，仍然能够访问它所在词法作用域。
 
 // 经典面试题
-for(var i = 0;i<4;i++){
-    let timer = function(){
+for (var i = 0; i < 4; i++) {
+    let timer = function () {
         console.log(i);
     }
     setTimeout(timer, i * 1000)
 }
 // 每隔1秒输出一个 4 var 定义的变量是函数作用域，或者全局作用域，此处只定义了一个 i，timer 函数中使用了 i 的引用，当 for 循环结束后，timer 会被调用，此时 i 为 4。
 
-for(var i = 0;i<4;i++){
-    (function(j){
-        let timer = function(){
+for (var i = 0; i < 4; i++) {
+    (function (j) {
+        let timer = function () {
             console.log(j);
         }
-        setTimeout(timer,j*1000)
+        setTimeout(timer, j * 1000)
     })(i)
 }
 
-for(let i = 0;i<4;i++){
-    let timer = function(){
+for (let i = 0; i < 4; i++) {
+    let timer = function () {
         console.log(i);
     }
     setTimeout(timer, i * 1000)
 }
 // ES6 以后可以通过 let 声明块级作用域的变量。把 var 改成 let，在 for 循环中，每次声明一个独立的变量 i。
+
+//Number类型
+//toString：可把数字转换成字符串，通过第二个参数可以控制转换的进制。
+let num = 10;
+console.log(num.toString()) //10
+console.log(num.toString(2)) //1010 转换成二进制
+console.log(num.toString(8)); //12 转换成8进制
+console.log(num.toString(10)); //10 转换成10进制
+console.log(num.toString(16)); //16 转换成16进制
+
+//toFixed：保留几位小数
+let num1 = 20;
+console.log(num1.toFixed(2)) //20.00
+num = 20.644 // 保留 1 位小数，四舍五入
+console.log(num.toFixed(1)) //20.6 
+
+//isInteger：是否为整数
+console.log(Number.isInteger(1.01)) //false
+console.log(Number.isInteger(1)) // true
+
