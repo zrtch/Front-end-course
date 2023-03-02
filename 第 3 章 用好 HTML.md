@@ -1,4 +1,4 @@
-### HTML 结构
+## HTML 结构
 
 ![dom](https://raw.githubusercontent.com/zrtch/blog-img/master/68747470733a2f2f6d6d62697a2e717069632e636e2f6d6d62697a5f706e672f645a6a7a4c33635a4c4759376b53767368474f71794f4f4f75696145583569624569624c456e39696270644534517969636b6c3371696130735769623877716d74377165787566524776664c305a78456e464b47615a763.webp)
 ![各个标签的作用](https://raw.githubusercontent.com/zrtch/blog-img/master/640)
@@ -9,7 +9,7 @@ meta 标签用来定义一些元数据，提供网站的基本信息，供搜索
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 ```
 
-### 学习前端用过的资源
+## 学习前端用过的资源
 
 MDN 官网[MDN 官网](https://developer.mozilla.org/en-US/#)
 
@@ -18,12 +18,12 @@ MDN 官网[MDN 官网](https://developer.mozilla.org/en-US/#)
 - 接着到 JavaScript 可直接看《JavaScript 高级程序设计》
 - 较好资源 [github 地址](https://github.com/lefex/DSA/issues/45)
 
-### 读懂 HTML 标签
+## 读懂 HTML 标签
 
 HTML 其实最初是为了展示文档而发明的，而标签的出现是为了满足文档的需求。比如一个文档包含标题、段落、强调等，而这一切于 HTML 中的标签一一对应，比如标题对应于 H1-H6，段落对应于 p，而这些标签是具有「语义」的，也就是说它们带有一定的感情色彩。
 ![各个标签的作用](https://raw.githubusercontent.com/zrtch/blog-img/master/68747470733a2f2f6d6d62697a2e717069632e636e2f6d6d62697a5f706e672f645a6a7a4c33635a4c4759734a683771356d34557059523756633243544654656963696246444b726d503643364e69614e585a62377a4c6961746e4b4147715431335076314f575766576634517069624b65626c4472433.webp)
 
-### 使用 CSS 的三种方式
+## 使用 CSS 的三种方式
 
 - CSS 的加载过程
   ![ CSS 的加载过程](https://raw.githubusercontent.com/zrtch/blog-img/master/CSS%20%E7%9A%84%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B.webp)
@@ -53,7 +53,7 @@ HTML 其实最初是为了展示文档而发明的，而标签的出现是为了
 </p>
 ```
 
-### CSS 中的选择器详解
+## CSS 中的选择器详解
 
 ![ CSS 的加载过程](https://raw.githubusercontent.com/zrtch/blog-img/master/20230302091742.png)
 
@@ -184,7 +184,7 @@ p:first-child {
 从图中可以明确，p:first-child 选择的是孩子节点中第一个元素是 p 的元素。所以被选中的元素为下图中「突出」显示的元素。
 ![](https://raw.githubusercontent.com/zrtch/blog-img/master/20230302091954.png)
 
-### boder 能干啥
+## boder 能干啥
 
 它的意思是「边框」。在超越技术官网上有这么一种设计，自我介绍、联系方式和公众号下面有一条横线，它会根据字数的不同，长度在变化。这里恰好用到了 border 这个属性。
 
@@ -209,7 +209,7 @@ p:first-child {
 }
 ```
 
-### CSS 布局的半壁江山---盒子模型
+## CSS 布局的半壁江山---盒子模型
 
 - **一.块级盒子(block)**:
 
@@ -299,7 +299,7 @@ box-sizing: border-box;
 
 ![](<https://raw.githubusercontent.com/zrtch/blog-img/master/p%20(8).webp>)
 
-### @规则之@media
+## @规则之@media
 
 @media 通俗地讲就是为了**匹配不同的媒体**，根据条件的不同**使用不同的 CSS 样式**。下面代码中的 **screen 是媒体类型**，在此表示带有屏幕的设备，比如电脑、手机，还有其它的媒体类型，比如 tv；and 用来组合多个条件，这里表示且，还有 not 和 only；**min-width 是媒体功能**
 
@@ -309,7 +309,7 @@ box-sizing: border-box;
 }
 ```
 
-### 打破常规之 display
+## 打破常规之 display
 
 - **display:inline** : 使用 inline 告诉浏览器这是一个**行内元素**，布局的时候要按照行内元素的方式布局，比如 span 标签默认的就是这种布局方式。在有足够空间的时候，**它不会换行**。不能使用 width 和 height 属性，margin 只会在水平方向起作用。
 - **display:block** : 使用 block 告诉浏览器这是一个**块级元素**，布局的时候要按照块级元素的方式布局，比如 p 、div 标签默认就是这种布局方式。使 span 标签变为块级标签，效果如下：
@@ -324,21 +324,13 @@ span {
 
 ![](<https://raw.githubusercontent.com/zrtch/blog-img/master/p%20(9).webp>)
 
-- **display:none** : 这种布局方式会**隐藏元素**。
-- **display:flex** : 这是一种 flexbox 布局，它是一维的。
-- **display:grid** : 这是一种网格布局，它是二维的。
+- `display:none`: 这种布局方式会隐藏元素。
+- `display:flex` : 这是一种 flexbox 布局，它是一维的。
+- `display:grid` : 这是一种网格布局，它是二维的。
 
-### CSS 中使用图
+## CSS 中使用图
 
-- **img 标签** : img 标签比较特殊，它默认属于行内（inline）元素。
-
-```css
-.mini-logo {
-  width: 30px;
-  /* 指定行内元素的垂直对齐方式 */
-  vertical-align: middle;
-}
-```
+**img 标签** : img 标签比较特殊，它默认属于行内（inline）元素。
 
 ```html
 <p>
@@ -374,14 +366,14 @@ span {
 3. **background-postion-y**：<u>背景在 y 轴上的位置</u>；
 4. **background-repeat**: <u>背景的重复方式</u>， no-repat 不重复，repeat 重复，repat-x X 轴上重复，还有其它关键字，读者可以自行查看
    https://developer.mozilla.org/zh-CN/docs/Web/CSS/background-repeat。
-5. **background-size**: <u>背景图的大小</u>；</br>
-   **background-size: cover**，缩放背景图以完全覆盖背景区，保持原图的宽高比，可能背景图部分会看不到，填满背景图；</br>
-   **background-size: contain**，缩放背景图以完全显示背景图，保持原图的宽高比，可能背景部分区域空白，尽可能把图显示完整；</br>
-   background-size: 50%，背景图的大小为背景区的百分比；</br>
-   background-size: 12px，背景图的宽度为 12px，高度按照比例自动缩放；</br>
-   background-size: 12px 14px，背景图的宽度为 12px，高度 14px；
+5. **background-size**: <u>背景图的大小</u>；
+   - cover：缩放背景图以完全覆盖背景区，保持原图的宽高比，可能背景图部分会看不到，填满背景图；
+   - contain：缩放背景图以完全显示背景图，保持原图的宽高比，可能背景部分区域空白，尽可能把图显示完整；
+   - background-size: 50%，背景图的大小为背景区的百分比；
+   - background-size: 12px，背景图的宽度为 12px，高度按照比例自动缩放；
+   - background-size: 12px 14px，背景图的宽度为 12px，高度 14px；
 
-### 在文字前、后插入一个图标之伪类选择器
+## 在文字前、后插入一个图标之伪类选择器
 
 伪选择分为**伪类选择器**和**伪元素选择器**；伪选择在于「伪」这个字，他很能「伪装」，比如它偶尔伪装成一个 DOM 中不存在的元素。
 
@@ -440,7 +432,7 @@ a:visited {
 ::first-line  对首行内容进行操作	p:first-line    选择每个<p> 元素的第一行
 ```
 
-### 设计师的要求
+## 设计师的要求
 
 - 显示一行内容:无非就是要让显示的内容不这行显示,对超过的可是区域的内容进行隐藏即可.
 
@@ -469,7 +461,7 @@ text-overflow 这个属性只对块级元素起作用,表示对超出指定区�
 }
 ```
 
-### css 动画
+## css 动画
 
 - **animation：CSS 动画，可设置不同帧的动效；** animation 是通过 CSS 给某个 HTML 元素设置一个动画，可以通过下面这些属性来控制动画。
 
@@ -589,7 +581,7 @@ function scale() {
 }
 ```
 
-### 屏幕尺寸之相对单位
+## 屏幕尺寸之相对单位
 
 相对单位指它的尺寸是**相对于另外一个元素的尺寸**。常用的是 em、rem、vh、vw、vmin、vmax。理解相对单位的时候需要掌握 font-size 这个 CSS 属性，它表示字体的大小，**同时也可以用来计算相对单位的长度**。「避免认为 font-size 就是表示字体大小的思维定势」。
 
@@ -680,7 +672,7 @@ body {
 }
 ```
 
-### CSS 中的权重
+## CSS 中的权重
 
 CSS 的权重可以通过 4 个以 - 分开的数字来表示权重值的大小，比如：1-0-10-0，0-1-1-1，比较的时候先从高位开始对比，如果相同则对比下一位的值。
 
@@ -743,7 +735,7 @@ div p {
 }
 ```
 
-### 写出易复用、易维护、结构清晰的 CSS
+## 写出易复用、易维护、结构清晰的 CSS
 
 > Less 是一门 CSS 预处理语言，它扩展了 CSS 语言，增加了变量、Mixin、函数等特性，使 CSS 更易维护和扩展。
 
